@@ -90,6 +90,10 @@ nav.solid .lock .wm{color:var(--ink)}
 .nav-cta{border:1px solid var(--line);border-radius:999px;padding:9px 18px;transition:background .3s,color .3s,border-color .3s}
 .nav-cta:hover{background:var(--ink);color:var(--bone);border-color:var(--ink)}
 .nav-cta::after{display:none!important}
+nav:not(.solid) .nav-links a{color:rgba(251,249,245,.86)}
+nav:not(.solid) .nav-links a::after{background:#FBF9F5}
+nav:not(.solid) .nav-cta{border-color:rgba(251,249,245,.42)}
+nav:not(.solid) .nav-cta:hover{background:#FBF9F5;color:var(--ink);border-color:#FBF9F5}
 @media(max-width:960px){.nav-links a:not(.nav-cta){display:none}}
 
 /* intro */
@@ -231,6 +235,48 @@ footer .lock .wm small{display:block;font-family:"Noto Sans KR",sans-serif;font-
 footer small{color:var(--mute);font-size:11.5px;line-height:2.1;display:block}
 @media(max-width:820px){.info div{grid-template-columns:1fr;gap:4px}}
 
+/* ============ WebGL 3D 레이어 ============ */
+#gl{position:fixed;inset:0;width:100%;height:100%;z-index:5;pointer-events:none;display:none}
+html.gl #gl{display:block}
+html.gl .hero-scrim{z-index:6}
+html.gl .hero .wrap{z-index:8}
+html.gl .hero-down{z-index:8}
+html.gl .hero-ring{display:none}
+
+/* 사업 — 3D 카루셀 */
+.stage3d{position:relative;width:100%;height:clamp(360px,54vh,560px);display:none;margin-top:clamp(6px,1vh,14px)}
+html.gl .stage3d{display:block}
+.stage3d .hit{position:absolute;inset:0;z-index:7;cursor:grab;touch-action:pan-y}
+.stage3d .hit.drag{cursor:grabbing}
+/* 3D 모드에서도 다섯 개 카드 원문은 스크린리더에 남긴다 — display:none 대신 시각적으로만 감춘다 */
+html.gl #railOuter{position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%);white-space:nowrap;pointer-events:none}
+.slide-meta{position:relative;z-index:8;display:none;margin-top:clamp(20px,4vh,38px);max-width:34em}
+html.gl .slide-meta{display:block}
+.slide-meta .no{display:flex;align-items:center;gap:10px;color:var(--mute);font-size:10.5px;letter-spacing:.24em;margin-bottom:11px}
+.slide-meta .no i{display:block;width:22px;height:1px;background:var(--line)}
+.slide-meta h3{font-size:clamp(20px,2.7vw,27px);margin-bottom:11px}
+.slide-meta .d{color:var(--ink-2);font-size:14.5px;line-height:2}
+.slide-meta .tags{margin-top:13px;color:var(--mute);font-size:12px}
+.slide-meta .swap{transition:opacity .28s ease,transform .28s ease}
+.slide-meta.out .swap{opacity:0;transform:translateY(7px)}
+.dots{display:flex;gap:7px;margin-top:24px}
+.dots button{width:22px;height:2px;background:var(--line);border-radius:2px;transition:background .35s,width .35s}
+.dots button.on{background:var(--ink);width:36px}
+
+/* 운영 구조 — 3D 다이얼 */
+html.gl .dial svg{opacity:0;pointer-events:none}
+html.gl .dial-mid{z-index:8}
+.dial-hit{position:absolute;inset:0;z-index:7;display:none}
+html.gl .dial-hit{display:block}
+
+/* 현장 — 카드 3D 틸트 */
+.gstrip figure{transform-style:preserve-3d;transition:transform .5s cubic-bezier(.2,.7,.3,1)}
+html.gl .gal{perspective:1100px}
+
+@media(max-width:760px){
+  .stage3d{height:clamp(300px,44vh,420px)}
+}
+
 @media (prefers-reduced-motion:reduce){
   *{animation:none!important;transition:none!important}
   .lead w{color:var(--ink)}
@@ -238,6 +284,7 @@ footer small{color:var(--mute);font-size:11.5px;line-height:2.1;display:block}
 }
 </style>
 
+<canvas id="gl" aria-hidden="true"></canvas>
 <div class="bar" id="bar" aria-hidden="true"></div>
 <div id="cur" aria-hidden="true"><span id="curLabel"></span></div>
 <div id="intro" aria-hidden="true"><canvas id="introC" width="480" height="480"></canvas></div>
@@ -345,6 +392,14 @@ footer small{color:var(--mute);font-size:11.5px;line-height:2.1;display:block}
       </article>
     </div>
   </div>
+  <div class="stage3d" id="stage3d" aria-hidden="true"><div class="hit" id="stageHit"></div></div>
+  <div class="wrap slide-meta" id="slideMeta">
+    <p class="no swap"><i></i><span id="smNo"></span></p>
+    <h3 class="swap" id="smTitle"></h3>
+    <p class="d swap" id="smDesc"></p>
+    <p class="tags swap" id="smTags"></p>
+    <div class="dots" id="smDots"></div>
+  </div>
   <div class="wrap rail-nav">
     <button id="railPrev" aria-label="이전">←</button>
     <button id="railNext" aria-label="다음">→</button>
@@ -364,6 +419,7 @@ footer small{color:var(--mute);font-size:11.5px;line-height:2.1;display:block}
           <circle class="prog" id="prog" cx="200" cy="200" r="126" transform="rotate(-90 200 200)"/>
           <g id="nodes"></g>
         </svg>
+        <div class="dial-hit" id="dialHit" aria-hidden="true"></div>
         <div class="dial-mid">
           <div>
             <p class="n" id="stepNo">STEP 01</p>
@@ -549,9 +605,12 @@ function draggable(outer, inner, step){
 var railCtl = draggable(document.getElementById('railOuter'), document.getElementById('rail'), 400);
 draggable(document.getElementById('galOuter'), document.getElementById('gstrip'), 320);
 var pB = document.getElementById('railPrev'), nB = document.getElementById('railNext');
-pB.addEventListener('click', function(){ railCtl.step(-1); });
-nB.addEventListener('click', function(){ railCtl.step(1); });
-setInterval(function(){ pB.disabled = railCtl.atStart(); nB.disabled = railCtl.atEnd(); }, 300);
+pB.addEventListener('click', function(){ if(window.__CLworks){ window.__CLworks(-1); return; } railCtl.step(-1); });
+nB.addEventListener('click', function(){ if(window.__CLworks){ window.__CLworks(1); return; } railCtl.step(1); });
+setInterval(function(){
+  if(window.__CLworks){ pB.disabled = false; nB.disabled = false; return; }
+  pB.disabled = railCtl.atStart(); nB.disabled = railCtl.atEnd();
+}, 300);
 
 /* 순환 구조 다이얼 */
 var STEPS = [
@@ -602,6 +661,7 @@ function select(i, user){
   stepDesc.textContent = STEPS[i].d;
 }
 select(0,false);
+window.__CLselect = select;
 
 /* 문장 채우기 */
 var LEAD = '전통은 지키는 것이 아니라, 오늘 팔리는 경험으로 옮기는 것입니다.';
@@ -651,6 +711,544 @@ ScrollTrigger.create({trigger:'#flow', start:'top 62%', end:'bottom 48%', scrub:
     select(Math.min(STEPS.length-1, Math.floor(self.progress*STEPS.length)), false);
   }});
 })();
+</script>
+
+<script type="importmap">
+{"imports":{"three":"https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js"}}
+</script>
+<script type="module">
+import * as THREE from 'three';
+
+const RM = matchMedia('(prefers-reduced-motion: reduce)').matches;
+const HUES = ['#4FA45C','#3BA07A','#2E9E8F','#2F62C4','#5551BC','#6A4BB4','#8E46A8','#A93B72','#9E3F55'];
+const TAU = Math.PI * 2;
+const DEG = Math.PI / 180;
+const cvs = document.getElementById('gl');
+
+let renderer = null;
+if (!RM && cvs) {
+  try {
+    renderer = new THREE.WebGLRenderer({ canvas: cvs, antialias: true, alpha: true, powerPreference: 'high-performance' });
+  } catch (e) { renderer = null; }
+}
+if (renderer) boot();
+
+function boot() {
+  const root = document.documentElement;
+  const MOBILE = matchMedia('(max-width:760px)').matches;
+  const clock = new THREE.Clock();
+  const views = [];
+  const ptr = { x: 0, y: 0, tx: 0, ty: 0 };
+  const cur = document.getElementById('cur'), curLabel = document.getElementById('curLabel');
+
+  renderer.setPixelRatio(Math.min(devicePixelRatio, MOBILE ? 1.5 : 1.75));
+  renderer.setSize(innerWidth, innerHeight, false);
+  renderer.autoClear = false;
+  renderer.setScissorTest(true);
+
+  const loader = new THREE.TextureLoader();
+  const maxAniso = renderer.capabilities.getMaxAnisotropy();
+  function texture(src, onAspect) {
+    const t = loader.load(src, (tt) => { if (onAspect && tt.image) onAspect(tt.image.width / tt.image.height); });
+    t.colorSpace = THREE.SRGBColorSpace;
+    t.anisotropy = Math.min(4, maxAniso);
+    return t;
+  }
+  // 이미지 비율 대비 화면 비율 — cover 방식 UV 보정
+  function cover(planeAspect, imgAspect) {
+    return new THREE.Vector2(Math.min(planeAspect / imgAspect, 1), Math.min(imgAspect / planeAspect, 1));
+  }
+  const frustum = (cam, dist) => {
+    const h = 2 * Math.tan(cam.fov * DEG / 2) * dist;
+    return { h: h, w: h * cam.aspect };
+  };
+
+  addEventListener('pointermove', (e) => {
+    ptr.tx = (e.clientX / innerWidth) * 2 - 1;
+    ptr.ty = -((e.clientY / innerHeight) * 2 - 1);
+  }, { passive: true });
+
+  /* ─────────── 01. 히어로 — 사진 평면 + 3D 브랜드 링 ─────────── */
+  const heroEl = document.querySelector('.hero');
+  const heroScene = new THREE.Scene();
+  const heroCam = new THREE.PerspectiveCamera(40, 1, .1, 60);
+  heroCam.position.set(0, 0, 5);
+  const HERO_D = 5;
+
+  let heroImgAspect = 1.5;
+  const heroSrc = document.getElementById('heroImg').getAttribute('src');
+  const photoU = {
+    uTex: { value: texture(heroSrc, (a) => { heroImgAspect = a; }) },
+    uCover: { value: new THREE.Vector2(1, 1) },
+    uTime: { value: 0 }, uScroll: { value: 0 }, uAmp: { value: MOBILE ? .035 : .06 }
+  };
+  const photo = new THREE.Mesh(
+    new THREE.PlaneGeometry(1, 1, MOBILE ? 40 : 90, MOBILE ? 28 : 60),
+    new THREE.ShaderMaterial({
+      uniforms: photoU,
+      vertexShader: `
+        uniform float uTime, uScroll, uAmp;
+        varying vec2 vUv; varying float vD;
+        void main(){
+          vUv = uv;
+          vec3 p = position;
+          float w = sin(p.x*7.0 + uTime*.45) * .5 + sin(p.y*9.0 - uTime*.33) * .5;
+          float d = w * uAmp;
+          d -= uScroll * (p.x*p.x*1.6 + p.y*p.y*1.1) * .9;   // 스크롤하면 가장자리가 뒤로 말린다
+          p.z += d; vD = d;
+          gl_Position = projectionMatrix * modelViewMatrix * vec4(p, 1.);
+        }`,
+      fragmentShader: `
+        uniform sampler2D uTex; uniform vec2 uCover;
+        varying vec2 vUv; varying float vD;
+        void main(){
+          vec2 uv = (vUv - .5) * uCover + .5;
+          vec3 c = texture2D(uTex, uv).rgb;
+          c *= 1.0 + vD * 1.4;                                // 굴곡에 따른 명암
+          gl_FragColor = vec4(c, 1.);
+        }`
+    })
+  );
+  heroScene.add(photo);
+
+  // 브랜드 마크(점 링)를 3D 입자로
+  function dotRing(count, radius, spread) {
+    const pos = new Float32Array(count * 3), col = new Float32Array(count * 3);
+    const size = new Float32Array(count), phase = new Float32Array(count);
+    const c = new THREE.Color();
+    for (let i = 0; i < count; i++) {
+      const a = Math.random() * TAU;
+      const band = radius * (1 + (Math.random() - .5) * .16);
+      pos[i * 3] = Math.cos(a) * band;
+      pos[i * 3 + 1] = Math.sin(a) * band;
+      pos[i * 3 + 2] = (Math.random() - .5) * radius * .26;
+      c.set(HUES[Math.floor(((a / TAU) + .75) % 1 * HUES.length)]);
+      col[i * 3] = c.r; col[i * 3 + 1] = c.g; col[i * 3 + 2] = c.b;
+      const big = Math.random();
+      size[i] = big > .95 ? 9.5 : big > .76 ? 5.4 : 2.8;
+      phase[i] = Math.random() * TAU;
+    }
+    const g = new THREE.BufferGeometry();
+    g.setAttribute('position', new THREE.BufferAttribute(pos, 3));
+    g.setAttribute('aColor', new THREE.BufferAttribute(col, 3));
+    g.setAttribute('aSize', new THREE.BufferAttribute(size, 1));
+    g.setAttribute('aPhase', new THREE.BufferAttribute(phase, 1));
+    const m = new THREE.ShaderMaterial({
+      uniforms: { uTime: { value: 0 }, uPix: { value: renderer.getPixelRatio() }, uAlpha: { value: 1 }, uJit: { value: spread } },
+      transparent: true, depthWrite: false, blending: THREE.AdditiveBlending,
+      vertexShader: `
+        attribute vec3 aColor; attribute float aSize; attribute float aPhase;
+        uniform float uTime, uPix, uJit;
+        varying vec3 vColor; varying float vA;
+        void main(){
+          vColor = aColor;
+          vec3 p = position;
+          p.x += sin(uTime*.7 + aPhase) * uJit;
+          p.y += cos(uTime*.6 + aPhase*1.3) * uJit;
+          p.z += sin(uTime*.5 + aPhase*.7) * uJit;
+          vec4 mv = modelViewMatrix * vec4(p, 1.);
+          vA = .5 + .5 * sin(uTime*1.1 + aPhase);
+          gl_PointSize = aSize * uPix * (2.6 / -mv.z);
+          gl_Position = projectionMatrix * mv;
+        }`,
+      fragmentShader: `
+        uniform float uAlpha;
+        varying vec3 vColor; varying float vA;
+        void main(){
+          float d = length(gl_PointCoord - .5);
+          float a = smoothstep(.5, .12, d);
+          if(a < .01) discard;
+          gl_FragColor = vec4(vColor, a * vA * uAlpha);
+        }`
+    });
+    return new THREE.Points(g, m);
+  }
+
+  const ring = dotRing(MOBILE ? 900 : 2200, 1, .012);
+  const ringG = new THREE.Group();
+  ringG.add(ring);
+  heroScene.add(ringG);
+
+  // 공중의 먼지 입자 — 깊이감
+  const dust = dotRing(MOBILE ? 120 : 260, 1, .02);
+  dust.material.uniforms.uAlpha.value = .5;
+  const dustPos = dust.geometry.attributes.position;
+  for (let i = 0; i < dustPos.count; i++) {
+    dustPos.setXYZ(i, (Math.random() - .5) * 2, (Math.random() - .5) * 2, (Math.random() - .5) * 2);
+  }
+  dustPos.needsUpdate = true;
+  heroScene.add(dust);
+
+  views.push({
+    el: heroEl, scene: heroScene, cam: heroCam,
+    update(t, aspect, rect) {
+      const p = Math.max(0, Math.min(1, -rect.top / rect.height));
+      const f = frustum(heroCam, HERO_D);
+      photo.scale.set(f.w * 1.02, f.h * 1.02, 1);
+      photo.position.y = p * .5;
+      photoU.uTime.value = t; photoU.uScroll.value = p;
+      photoU.uCover.value.copy(cover(f.w / f.h, heroImgAspect));
+
+      const rf = frustum(heroCam, HERO_D - 1.9);
+      ringG.position.set(rf.w * .32, rf.h * .22 - p * 1.2, 1.9);
+      ringG.scale.setScalar(rf.h * (MOBILE ? .11 : .14));
+      ringG.rotation.set(-.26 + Math.sin(t * .31) * .16 + ptr.y * .22,
+                        Math.sin(t * .4) * .45 + ptr.x * .38,
+                        t * .22);   // 링 자체 축으로 회전 — 원형을 유지한 채 입체로 흔들린다
+      ring.material.uniforms.uTime.value = t;
+
+      dust.scale.set(f.w * .6, f.h * .6, 2.2);
+      dust.position.set(0, -p * .6, 1.2);
+      dust.rotation.y = t * .04;
+      dust.material.uniforms.uTime.value = t;
+
+      heroCam.position.x = ptr.x * .24;
+      heroCam.position.y = ptr.y * .14;
+      heroCam.lookAt(0, 0, 0);
+    }
+  });
+
+  /* ─────────── 02. 사업 — 3D 실린더 카루셀 ─────────── */
+  const stage = document.getElementById('stage3d');
+  const hit = document.getElementById('stageHit');
+  const cards = [].slice.call(document.querySelectorAll('#rail .card')).map((c) => ({
+    src: c.querySelector('img').getAttribute('src'),
+    alt: c.querySelector('img').getAttribute('alt') || '',
+    no: c.querySelector('.no').textContent.replace(/\s+/g, ' ').trim(),
+    title: c.querySelector('h3').textContent,
+    desc: c.querySelector('h3 + p').textContent,
+    tags: c.querySelector('.tags').textContent
+  }));
+  const N = cards.length, SPREAD = .36, RAD = 7.0;
+
+  const worksScene = new THREE.Scene();
+  const worksCam = new THREE.PerspectiveCamera(30, 1, .1, 60);
+  worksCam.position.set(0, .3, 6);
+  const cyl = new THREE.Group();
+  worksScene.add(cyl);
+
+  // 카드 아래 접지 그림자
+  const shadowTex = (() => {
+    const c = document.createElement('canvas'); c.width = c.height = 128;
+    const g = c.getContext('2d');
+    const rg = g.createRadialGradient(64, 64, 0, 64, 64, 64);
+    rg.addColorStop(0, 'rgba(27,25,22,.42)'); rg.addColorStop(.55, 'rgba(27,25,22,.14)'); rg.addColorStop(1, 'rgba(27,25,22,0)');
+    g.fillStyle = rg; g.fillRect(0, 0, 128, 128);
+    return new THREE.CanvasTexture(c);
+  })();
+
+  const slides = cards.map((card, i) => {
+    const g = new THREE.Group();
+
+    const u = {
+      uTex: { value: texture(card.src, (asp) => { u.uCover.value.copy(cover(2.0 / 2.4, asp)); }) },
+      uCover: { value: new THREE.Vector2(1, 1) },
+      uFocus: { value: 0 }, uVel: { value: 0 }, uAlpha: { value: 1 }
+    };
+    const mesh = new THREE.Mesh(
+      new THREE.PlaneGeometry(2.0, 2.4, 28, 28),
+      new THREE.ShaderMaterial({
+        uniforms: u,
+        vertexShader: `
+          uniform float uVel;
+          varying vec2 vUv;
+          void main(){
+            vUv = uv;
+            vec3 p = position;
+            p.z += sin(uv.x * 3.14159) * uVel * 1.6;          // 끌 때 휘어진다
+            p.z -= (1.0 - cos(uv.y * 3.14159)) * .06;
+            gl_Position = projectionMatrix * modelViewMatrix * vec4(p, 1.);
+          }`,
+        transparent: true,
+        fragmentShader: `
+          uniform sampler2D uTex; uniform vec2 uCover; uniform float uFocus, uAlpha;
+          varying vec2 vUv;
+          void main(){
+            vec2 uv = (vUv - .5) * uCover + .5;
+            vec3 c = texture2D(uTex, uv).rgb;
+            float g = dot(c, vec3(.299,.587,.114));
+            c = mix(vec3(g) * .95, c, .34 + .66 * uFocus);      // 뒤쪽 카드는 탈색
+            c = mix(c * .72, c, .5 + .5 * uFocus);              // 뒤쪽 카드는 어둡게
+            gl_FragColor = vec4(c, uAlpha);
+          }`
+      })
+    );
+    const sh = new THREE.Mesh(
+      new THREE.PlaneGeometry(2.4, .95),
+      new THREE.MeshBasicMaterial({ map: shadowTex, transparent: true, depthWrite: false, opacity: .5 })
+    );
+    sh.rotation.x = -Math.PI / 2;
+    sh.position.set(0, -1.28, .18);
+    g.add(mesh); g.add(sh);
+    cyl.add(g);
+    return { g: g, mesh: mesh, sh: sh, u: u };
+  });
+
+  let pos = 0, pTarget = 0, vel = 0, dragging = false, lastX = 0, moved = 0, active = -1;
+  const wrap = (o) => { o = ((o % N) + N) % N; return o > N / 2 ? o - N : o; };
+
+  const smNo = document.getElementById('smNo'), smTitle = document.getElementById('smTitle');
+  const smDesc = document.getElementById('smDesc'), smTags = document.getElementById('smTags');
+  const meta = document.getElementById('slideMeta'), dotsEl = document.getElementById('smDots');
+  const dotBtns = cards.map((c, i) => {
+    const b = document.createElement('button');
+    b.type = 'button';
+    b.setAttribute('aria-label', (i + 1) + '번째 사업 보기');
+    b.addEventListener('click', () => goTo(i));
+    dotsEl.appendChild(b);
+    return b;
+  });
+  function goTo(i) { pTarget = i + Math.round((pTarget - i) / N) * N; }
+  window.__CLworks = (d) => { pTarget = Math.round(pTarget) + d; };
+
+  function setActive(i) {
+    if (i === active) return;
+    active = i;
+    const c = cards[i];
+    meta.classList.add('out');
+    setTimeout(() => {
+      smNo.textContent = c.no; smTitle.textContent = c.title;
+      smDesc.textContent = c.desc; smTags.textContent = c.tags;
+      meta.classList.remove('out');
+    }, 190);
+    dotBtns.forEach((b, j) => b.classList.toggle('on', j === i));
+  }
+  smNo.textContent = cards[0].no; smTitle.textContent = cards[0].title;
+  smDesc.textContent = cards[0].desc; smTags.textContent = cards[0].tags;
+  dotBtns[0].classList.add('on'); active = 0;
+
+  hit.addEventListener('pointerdown', (e) => {
+    dragging = true; moved = 0; lastX = e.clientX; vel = 0;
+    hit.setPointerCapture(e.pointerId); hit.classList.add('drag');
+  });
+  hit.addEventListener('pointermove', (e) => {
+    if (!dragging) return;
+    const dx = e.clientX - lastX; lastX = e.clientX; moved += Math.abs(dx);
+    pTarget -= dx * .006; vel = dx;
+  });
+  function release(e) {
+    if (!dragging) return;
+    dragging = false; hit.classList.remove('drag');
+    pTarget = Math.round(pTarget - vel * .045);   // 관성 후 스냅
+    try { hit.releasePointerCapture(e.pointerId); } catch (err) {}
+  }
+  hit.addEventListener('pointerup', release);
+  hit.addEventListener('pointercancel', release);
+  if (cur) {
+    hit.addEventListener('pointerenter', () => { cur.classList.add('wide'); curLabel.textContent = 'DRAG'; });
+    hit.addEventListener('pointerleave', () => { cur.classList.remove('wide'); curLabel.textContent = ''; });
+  }
+
+  views.push({
+    el: stage, scene: worksScene, cam: worksCam,
+    update(t, aspect, rect) {
+      if (!dragging) vel *= .9;
+      pos += (pTarget - pos) * .09;
+      // 섹션이 화면에 들어오는 동안 카드가 한 장씩 부채처럼 펼쳐진다
+      const enter = Math.max(0, Math.min(1, (innerHeight - rect.top) / (innerHeight * .8)));
+      const e = 1 - Math.pow(1 - enter, 3);
+      slides.forEach((s, i) => {
+        const o = wrap(i - pos), ang = o * SPREAD * (.3 + .7 * e), ao = Math.abs(o);
+        s.g.position.set(Math.sin(ang) * RAD, Math.sin(t * .55 + i) * .03, Math.cos(ang) * RAD - RAD - (1 - e) * 2.4);
+        s.g.rotation.y = ang * .8;
+        const focus = Math.max(0, 1 - ao);
+        s.u.uFocus.value += (focus - s.u.uFocus.value) * .18;
+        s.u.uVel.value += ((dragging ? vel * .01 : 0) - s.u.uVel.value) * .1;
+        const a = Math.max(0, Math.min(1, (2.45 - ao) / .85));
+        s.u.uAlpha.value = a;
+        s.g.scale.setScalar(1 + .06 * s.u.uFocus.value);
+        s.sh.material.opacity = (.16 + .38 * s.u.uFocus.value) * a;
+        s.g.renderOrder = Math.round(50 - ao * 10);
+      });
+      setActive(((Math.round(pTarget) % N) + N) % N);
+      worksCam.position.x = ptr.x * .26;
+      worksCam.position.y = .3 + ptr.y * .1;
+      worksCam.lookAt(0, .04, 0);
+    }
+  });
+
+  /* ─────────── 03. 운영 구조 — 3D 다이얼 ─────────── */
+  const dialEl = document.querySelector('.dial');
+  const dialHit = document.getElementById('dialHit');
+  const flowScene = new THREE.Scene();
+  const flowCam = new THREE.PerspectiveCamera(42, 1, .1, 60);
+  flowCam.position.set(0, 0, 6);
+  flowScene.add(new THREE.AmbientLight(0xffffff, 1.15));
+  const key = new THREE.DirectionalLight(0xffffff, 1.5); key.position.set(2, 3, 4); flowScene.add(key);
+  const rim = new THREE.DirectionalLight(0xffe9c9, .7); rim.position.set(-3, -1, 2); flowScene.add(rim);
+
+  const dialG = new THREE.Group();
+  dialG.rotation.x = -.46;
+  flowScene.add(dialG);
+  const DR = 1.5;
+
+  dialG.add(new THREE.Mesh(
+    new THREE.TorusGeometry(DR, .009, 8, 200),
+    new THREE.MeshBasicMaterial({ color: 0xC8C1B4 })
+  ));
+
+  const progU = { uProg: { value: 1 / 6 } };
+  const progMesh = new THREE.Mesh(
+    new THREE.TorusGeometry(DR, .026, 10, 240),
+    new THREE.ShaderMaterial({
+      uniforms: progU,
+      vertexShader: `
+        varying float vAng; varying vec3 vN;
+        void main(){
+          vAng = atan(position.y, position.x);
+          vN = normalize(normalMatrix * normal);
+          gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.);
+        }`,
+      fragmentShader: `
+        uniform float uProg;
+        varying float vAng; varying vec3 vN;
+        void main(){
+          float f = mod(1.5707963 - vAng, 6.2831853) / 6.2831853;   // 12시에서 시계방향
+          if(f > uProg) discard;
+          float l = .55 + .45 * max(dot(vN, normalize(vec3(.4,.7,.6))), 0.);
+          gl_FragColor = vec4(vec3(.184,.290,.220) * l * 1.9, 1.);
+        }`
+    })
+  );
+  dialG.add(progMesh);
+
+  const STEPS = [].slice.call(document.querySelectorAll('#flowList button')).map((b) => b.querySelector('b').textContent);
+  const nodeGeo = new THREE.SphereGeometry(.082, 24, 20);
+  const nodes = STEPS.map((label, i) => {
+    const ang = Math.PI / 2 - i * (TAU / STEPS.length);
+    const m = new THREE.Mesh(nodeGeo, new THREE.MeshStandardMaterial({
+      color: 0xC8C1B4, roughness: .34, metalness: .12, emissive: 0x000000
+    }));
+    m.position.set(Math.cos(ang) * DR, Math.sin(ang) * DR, 0);
+    m.userData.i = i;
+    m.userData.hue = new THREE.Color(HUES[Math.floor(i / STEPS.length * HUES.length)]);
+    dialG.add(m);
+    return m;
+  });
+
+  // 라벨 스프라이트
+  function labelSprite(text) {
+    const c = document.createElement('canvas');
+    const dpr = 2; c.width = 220 * dpr; c.height = 64 * dpr;
+    const g = c.getContext('2d');
+    g.scale(dpr, dpr);
+    g.font = '400 24px "Noto Sans KR","Apple SD Gothic Neo",sans-serif';
+    g.textAlign = 'center'; g.textBaseline = 'middle';
+    g.fillStyle = '#1B1916';
+    g.fillText(text, 110, 32);
+    const t = new THREE.CanvasTexture(c);
+    t.colorSpace = THREE.SRGBColorSpace;
+    const s = new THREE.Sprite(new THREE.SpriteMaterial({ map: t, transparent: true, depthWrite: false, opacity: .34 }));
+    s.scale.set(.86, .25, 1);
+    return s;
+  }
+  let labels = [];
+  function buildLabels() {
+    labels.forEach((s) => dialG.remove(s));
+    labels = STEPS.map((label, i) => {
+      const ang = Math.PI / 2 - i * (TAU / STEPS.length);
+      const s = labelSprite(label);
+      s.position.set(Math.cos(ang) * DR * 1.31, Math.sin(ang) * DR * 1.31, .06);
+      dialG.add(s);
+      return s;
+    });
+  }
+  buildLabels();
+  if (document.fonts && document.fonts.ready) document.fonts.ready.then(buildLabels);
+
+  let flowIdx = 0, flowProg = 1 / STEPS.length;
+  function readStep() {
+    const m = /(\d+)/.exec(document.getElementById('stepNo').textContent || '');
+    if (m) flowIdx = Math.max(0, Math.min(STEPS.length - 1, parseInt(m[1], 10) - 1));
+  }
+  readStep();
+  new MutationObserver(readStep).observe(document.getElementById('stepNo'), { childList: true, characterData: true, subtree: true });
+
+  // 노드 직접 클릭
+  const ray = new THREE.Raycaster(), nd = new THREE.Vector2();
+  function pick(e) {
+    const r = dialHit.getBoundingClientRect();
+    nd.set(((e.clientX - r.left) / r.width) * 2 - 1, -((e.clientY - r.top) / r.height) * 2 + 1);
+    ray.setFromCamera(nd, flowCam);
+    const h = ray.intersectObjects(nodes, false);
+    return h.length ? h[0].object.userData.i : -1;
+  }
+  dialHit.addEventListener('pointermove', (e) => { dialHit.style.cursor = pick(e) >= 0 ? 'pointer' : ''; });
+  dialHit.addEventListener('click', (e) => {
+    const i = pick(e);
+    if (i >= 0 && window.__CLselect) window.__CLselect(i, true);
+  });
+
+  views.push({
+    el: dialEl, scene: flowScene, cam: flowCam,
+    update(t) {
+      dialG.rotation.y = Math.sin(t * .2) * .32 + ptr.x * .18;
+      dialG.rotation.x = -.46 + ptr.y * .1;
+      dialG.rotation.z = Math.sin(t * .16) * .04;
+      const target = (flowIdx + 1) / STEPS.length;
+      flowProg += (target - flowProg) * .09;
+      progU.uProg.value = flowProg;
+      nodes.forEach((m, i) => {
+        const on = i <= flowIdx, isCur = i === flowIdx;
+        const s = isCur ? 1.85 : on ? 1.25 : 1;
+        m.scale.setScalar(m.scale.x + (s - m.scale.x) * .12);
+        m.material.color.lerp(on ? m.userData.hue : new THREE.Color(0xC8C1B4), .1);
+        m.material.emissive.lerp(isCur ? m.userData.hue : new THREE.Color(0x000000), .1);
+        m.material.emissiveIntensity = .45;
+        m.position.z = (isCur ? .16 : 0);
+        if (labels[i]) labels[i].material.opacity += ((on ? 1 : .3) - labels[i].material.opacity) * .1;
+      });
+      flowCam.lookAt(0, 0, 0);
+    }
+  });
+
+  /* ─────────── 04. 현장 — 카드 3D 틸트 ─────────── */
+  if (matchMedia('(pointer:fine)').matches) {
+    document.querySelectorAll('.gstrip figure').forEach((f) => {
+      f.addEventListener('pointermove', (e) => {
+        const r = f.getBoundingClientRect();
+        const x = (e.clientX - r.left) / r.width - .5, y = (e.clientY - r.top) / r.height - .5;
+        f.style.transform = 'perspective(900px) rotateY(' + (x * 12).toFixed(2) + 'deg) rotateX(' + (-y * 12).toFixed(2) + 'deg) translateZ(24px)';
+      });
+      f.addEventListener('pointerleave', () => { f.style.transform = ''; });
+    });
+  }
+
+  /* ─────────── 렌더 루프 ─────────── */
+  addEventListener('resize', () => {
+    renderer.setPixelRatio(Math.min(devicePixelRatio, matchMedia('(max-width:760px)').matches ? 1.5 : 1.75));
+    renderer.setSize(innerWidth, innerHeight, false);
+    ring.material.uniforms.uPix.value = renderer.getPixelRatio();
+    dust.material.uniforms.uPix.value = renderer.getPixelRatio();
+  }, { passive: true });
+
+  root.classList.add('gl');
+
+  (function frame() {
+    requestAnimationFrame(frame);
+    const t = clock.getElapsedTime();
+    ptr.x += (ptr.tx - ptr.x) * .055;
+    ptr.y += (ptr.ty - ptr.y) * .055;
+
+    renderer.setScissorTest(false);
+    renderer.clear(true, true, true);
+    renderer.setScissorTest(true);
+
+    for (let i = 0; i < views.length; i++) {
+      const v = views[i], r = v.el.getBoundingClientRect();
+      if (r.width < 2 || r.height < 2 || r.bottom < -60 || r.top > innerHeight + 60) continue;
+      const l = Math.round(r.left), b = Math.round(innerHeight - r.bottom);
+      const w = Math.round(r.width), h = Math.round(r.height);
+      renderer.setViewport(l, b, w, h);
+      renderer.setScissor(l, b, w, h);
+      v.cam.aspect = w / h;
+      v.cam.updateProjectionMatrix();
+      v.update(t, w / h, r);
+      renderer.render(v.scene, v.cam);
+    }
+  })();
+}
+
 </script>
 </body>
 </html>
