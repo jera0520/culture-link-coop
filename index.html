@@ -264,6 +264,7 @@ h1 .ln > span{display:block}
 .cta .btns{display:flex;gap:10px;flex-wrap:wrap;margin-top:34px}
 .btn{display:inline-flex;align-items:center;gap:10px;padding:14px 28px;border-radius:999px;font-size:14px;font-weight:400;
   border:1px solid var(--line);transition:background .3s,color .3s,border-color .3s;will-change:transform}
+.btn svg{width:15px;height:15px;flex:none;opacity:.85}
 .btn-fill{background:var(--ink);color:var(--bone);border-color:var(--ink)}
 .btn-fill:hover{background:#000}
 .btn-line:hover{border-color:var(--ink)}
@@ -478,6 +479,12 @@ footer small{color:var(--mute);font-size:11.5px;line-height:2.1;display:block}
         <p data-i18n="contact.desc">단체 체험, 지자체·기관 행사, 특산품 입점, 조합원 참여까지. 안동에 오시기 전이라면 일정 조율부터 도와드립니다.</p>
         <div class="btns">
           <a class="btn btn-fill magnet" href="mailto:mun_link@naver.com" data-i18n="contact.btn.email">이메일로 문의하기</a>
+          <a class="btn btn-line" href="https://www.instagram.com/m_unlink/" target="_blank" rel="noopener">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
+              <rect x="3.2" y="3.2" width="17.6" height="17.6" rx="5.2"/><circle cx="12" cy="12" r="4.2"/>
+              <circle cx="17.5" cy="6.6" r="1.15" fill="currentColor" stroke="none"/>
+            </svg><span data-i18n="contact.btn.instagram">인스타그램 DM</span>
+          </a>
           <a class="btn btn-line" href="tel:0548412783">054-841-2783</a>
           <a class="btn btn-line" href="#works" data-i18n="contact.btn.rework">사업 영역 다시 보기</a>
         </div>
@@ -747,7 +754,7 @@ var I18N = {
     'gallery.g1':'체험 중 전통주 시음','gallery.g2':'주막 운영','gallery.g3':'식사 준비','gallery.g4':'종가 상차림','gallery.g5':'하회마을 체험장','gallery.g6':'숙소·실내 공간',
     'contact.heading':'같이 만들 일이 있으면<br>먼저 물어보셔도 됩니다',
     'contact.desc':'단체 체험, 지자체·기관 행사, 특산품 입점, 조합원 참여까지. 안동에 오시기 전이라면 일정 조율부터 도와드립니다.',
-    'contact.btn.email':'이메일로 문의하기','contact.btn.rework':'사업 영역 다시 보기',
+    'contact.btn.instagram':'인스타그램 DM','contact.btn.email':'이메일로 문의하기','contact.btn.rework':'사업 영역 다시 보기',
     'footer.info':'문화링크협동조합 · 대표 김영숙 · 사업자등록번호 508-81-38111 · 주류판매신고 508-5-36883<br>경상북도 안동시 경동로 574, 1층 (우)36674 · 2014년 4월 설립<br>전화 <a class="lk" href="tel:0548412783">054-841-2783</a> · 이메일 <a class="lk" href="mailto:mun_link@naver.com">mun_link@naver.com</a>'
   },
   en:{
@@ -772,7 +779,7 @@ var I18N = {
     'gallery.g1':'Tasting traditional liquor during the experience','gallery.g2':'Running the tavern','gallery.g3':'Preparing the meal','gallery.g4':'Jongga table setting','gallery.g5':'The Hahoe Village experience site','gallery.g6':'Lodging & indoor space',
     'contact.heading':'If there\'s something we could<br>make together, feel free to ask first',
     'contact.desc':'From group experiences and local government/institutional events to specialty product placement and cooperative membership — if you haven\'t come to Andong yet, we\'ll help coordinate the schedule first.',
-    'contact.btn.email':'Contact by email','contact.btn.rework':'Revisit our business areas',
+    'contact.btn.instagram':'Message us on Instagram','contact.btn.email':'Contact by email','contact.btn.rework':'Revisit our business areas',
     'footer.info':'Culture Link Cooperative · CEO Youngsuk Kim · Business Registration No. 508-81-38111 · Liquor Retail License No. 508-5-36883<br>574 Gyeongdong-ro, Andong-si, Gyeongsangbuk-do, South Korea (36674)<br>Founded April 2014<br>Tel <a class="lk" href="tel:0548412783">054-841-2783</a> · Email <a class="lk" href="mailto:mun_link@naver.com">mun_link@naver.com</a>'
   },
   ja:{
@@ -797,7 +804,7 @@ var I18N = {
     'gallery.g1':'体験中の伝統酒試飲','gallery.g2':'酒幕運営','gallery.g3':'食事の準備','gallery.g4':'宗家の膳立て','gallery.g5':'河回村体験場','gallery.g6':'宿泊・室内空間',
     'contact.heading':'一緒に作ることがあれば<br>先にお問い合わせください',
     'contact.desc':'団体体験、自治体・機関の行事、特産品の出店、組合員参加まで。安東にいらっしゃる前でしたら、日程調整からお手伝いします。',
-    'contact.btn.email':'メールでお問い合わせ','contact.btn.rework':'事業領域を見る',
+    'contact.btn.instagram':'Instagramでメッセージ','contact.btn.email':'メールでお問い合わせ','contact.btn.rework':'事業領域を見る',
     'footer.info':'文化リンク協同組合 · 代表 キム・ヨンスク · 事業者登録番号 508-81-38111 · 酒類販売申告 508-5-36883<br>大韓民国 慶尚北道安東市 慶東路574, 1階（郵便番号36674）<br>2014年4月設立<br>電話 <a class="lk" href="tel:0548412783">054-841-2783</a> · メール <a class="lk" href="mailto:mun_link@naver.com">mun_link@naver.com</a>'
   },
   it:{
@@ -822,7 +829,7 @@ var I18N = {
     'gallery.g1':'Degustazione di liquori tradizionali durante l\'esperienza','gallery.g2':'Gestione della taverna','gallery.g3':'Preparazione del pasto','gallery.g4':'Apparecchiatura jongga','gallery.g5':'Il sito dell\'esperienza nel villaggio di Hahoe','gallery.g6':'Alloggio e spazi interni',
     'contact.heading':'Se c\'è qualcosa da<br>creare insieme, scrivici pure',
     'contact.desc':'Dalle esperienze di gruppo, agli eventi di enti locali e istituzioni, alla vendita di prodotti tipici, fino alla partecipazione come socio. Se non sei ancora venuto ad Andong, ti aiutiamo prima a organizzare il programma.',
-    'contact.btn.email':'Contattaci via email','contact.btn.rework':'Rivedi le nostre attività',
+    'contact.btn.instagram':'Scrivici su Instagram','contact.btn.email':'Contattaci via email','contact.btn.rework':'Rivedi le nostre attività',
     'footer.info':'Culture Link Cooperative · CEO Youngsuk Kim · N. registrazione attività 508-81-38111 · Licenza vendita liquori 508-5-36883<br>574 Gyeongdong-ro, Andong-si, Gyeongsangbuk-do, Corea del Sud (36674)<br>Fondata nell\'aprile 2014<br>Tel <a class="lk" href="tel:0548412783">054-841-2783</a> · Email <a class="lk" href="mailto:mun_link@naver.com">mun_link@naver.com</a>'
   },
   de:{
@@ -847,7 +854,7 @@ var I18N = {
     'gallery.g1':'Verkostung von traditionellem Alkohol während des Erlebnisses','gallery.g2':'Betrieb der Wirtsstube','gallery.g3':'Vorbereitung des Essens','gallery.g4':'Jongga-Tischdeckung','gallery.g5':'Der Erlebnisort im Dorf Hahoe','gallery.g6':'Unterkunft & Innenräume',
     'contact.heading':'Wenn es etwas gibt,<br>das wir gemeinsam schaffen können, fragen Sie ruhig zuerst',
     'contact.desc':'Von Gruppenerlebnissen über Veranstaltungen von Kommunen und Institutionen bis hin zur Aufnahme regionaler Produkte und der Mitgliedschaft in der Genossenschaft. Wenn Sie noch nicht in Andong sind, helfen wir zunächst bei der Terminabstimmung.',
-    'contact.btn.email':'Per E-Mail kontaktieren','contact.btn.rework':'Geschäftsfelder erneut ansehen',
+    'contact.btn.instagram':'Auf Instagram schreiben','contact.btn.email':'Per E-Mail kontaktieren','contact.btn.rework':'Geschäftsfelder erneut ansehen',
     'footer.info':'Culture Link Cooperative · Geschäftsführerin Youngsuk Kim · Gewerberegisternummer 508-81-38111 · Alkoholverkaufslizenz 508-5-36883<br>574 Gyeongdong-ro, Andong-si, Gyeongsangbuk-do, Südkorea (36674)<br>Gegründet im April 2014<br>Tel <a class="lk" href="tel:0548412783">054-841-2783</a> · E-Mail <a class="lk" href="mailto:mun_link@naver.com">mun_link@naver.com</a>'
   },
   pl:{
@@ -872,7 +879,7 @@ var I18N = {
     'gallery.g1':'Degustacja tradycyjnego alkoholu podczas doświadczenia','gallery.g2':'Prowadzenie karczmy','gallery.g3':'Przygotowanie posiłku','gallery.g4':'Nakrycie stołu jongga','gallery.g5':'Miejsce doświadczenia w wiosce Hahoe','gallery.g6':'Noclegi i przestrzenie wewnętrzne',
     'contact.heading':'Jeśli jest coś,<br>co możemy zrobić razem, śmiało zapytaj najpierw',
     'contact.desc':'Od doświadczeń grupowych, przez wydarzenia samorządów i instytucji, po wprowadzanie produktów regionalnych i członkostwo w spółdzielni. Jeśli jeszcze nie byłeś w Andong, najpierw pomożemy ustalić harmonogram.',
-    'contact.btn.email':'Napisz do nas','contact.btn.rework':'Zobacz ponownie obszary działalności',
+    'contact.btn.instagram':'Napisz na Instagramie','contact.btn.email':'Napisz do nas','contact.btn.rework':'Zobacz ponownie obszary działalności',
     'footer.info':'Culture Link Cooperative · Prezes Youngsuk Kim · Nr rejestracji działalności 508-81-38111 · Zezwolenie na sprzedaż alkoholu 508-5-36883<br>574 Gyeongdong-ro, Andong-si, Gyeongsangbuk-do, Korea Południowa (36674)<br>Założona w kwietniu 2014<br>Tel <a class="lk" href="tel:0548412783">054-841-2783</a> · E-mail <a class="lk" href="mailto:mun_link@naver.com">mun_link@naver.com</a>'
   }
 };
