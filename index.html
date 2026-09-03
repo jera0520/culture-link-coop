@@ -93,6 +93,13 @@ nav.solid .lock .wm{color:var(--ink)}
 .nav-cta::after{display:none!important}
 @media(max-width:960px){.nav-links a:not(.nav-cta){display:none}}
 
+/* 언어 전환 */
+.lang-switch{display:flex;flex-wrap:wrap;justify-content:flex-end;gap:1px;align-items:center;margin-right:2px}
+.lang-switch button{padding:6px 7px;border-radius:999px;font-size:10px;letter-spacing:.08em;
+  color:var(--ink-2);opacity:.55;transition:opacity .25s,background .25s,color .25s}
+.lang-switch button:hover{opacity:1}
+.lang-switch button.on{opacity:1;background:rgba(27,25,22,.07)}
+
 /* intro */
 #intro{position:fixed;inset:0;z-index:200;background:var(--bone);display:grid;place-items:center}
 #intro canvas{width:min(46vw,210px);height:min(46vw,210px)}
@@ -264,11 +271,19 @@ footer small{color:var(--mute);font-size:11.5px;line-height:2.1;display:block}
     <img src="images/mark.png" alt=""><span class="wm">문화링크협동조합</span>
   </a>
   <div class="nav-links">
-    <a href="#about">소개</a>
-    <a href="#works">사업</a>
-    <a href="#flow">운영 구조</a>
-    <a href="#gallery">현장</a>
-    <a class="nav-cta" href="#contact">문의</a>
+    <a href="#about" data-i18n="nav.about">소개</a>
+    <a href="#works" data-i18n="nav.works">사업</a>
+    <a href="#flow" data-i18n="nav.flow">운영 구조</a>
+    <a href="#gallery" data-i18n="nav.gallery">현장</a>
+    <div class="lang-switch" role="group" aria-label="Language">
+      <button type="button" data-lang="ko">KO</button>
+      <button type="button" data-lang="en">EN</button>
+      <button type="button" data-lang="ja">JA</button>
+      <button type="button" data-lang="it">IT</button>
+      <button type="button" data-lang="de">DE</button>
+      <button type="button" data-lang="pl">PL</button>
+    </div>
+    <a class="nav-cta" href="#contact" data-i18n="nav.contact">문의</a>
   </div>
 </nav>
 
@@ -277,16 +292,16 @@ footer small{color:var(--mute);font-size:11.5px;line-height:2.1;display:block}
   <div class="hero-scrim"></div>
   <div class="hero-ring"><canvas id="ringC" width="380" height="380" aria-hidden="true"></canvas></div>
   <div class="wrap">
-    <p class="lab">경북 안동 · 하회마을 · SINCE 2014</p>
+    <p class="lab" data-i18n="hero.label">경북 안동 · 하회마을 · SINCE 2014</p>
     <h1 id="heroTitle">
-      <span class="ln"><span>체험에서 식탁까지,</span></span>
-      <span class="ln"><span>안동을 잇습니다</span></span>
+      <span class="ln"><span data-i18n="hero.line1">체험에서 식탁까지,</span></span>
+      <span class="ln"><span data-i18n="hero.line2">안동을 잇습니다</span></span>
     </h1>
-    <p class="hero-sub">하회마을을 찾은 사람이 보고 끝나는 여행 대신, 직접 만들고 맛보고 집에서도 다시 찾게 되는 하루를 설계합니다.</p>
+    <p class="hero-sub" data-i18n="hero.sub">하회마을을 찾은 사람이 보고 끝나는 여행 대신, 직접 만들고 맛보고 집에서도 다시 찾게 되는 하루를 설계합니다.</p>
     <dl class="hero-meta">
-      <div><dt>설립</dt><dd>2014년 4월</dd></div>
-      <div><dt>거점</dt><dd>안동시 경동로 574</dd></div>
-      <div><dt>형태</dt><dd>협동조합</dd></div>
+      <div><dt data-i18n="hero.meta.est.dt">설립</dt><dd data-i18n="hero.meta.est.dd">2014년 4월</dd></div>
+      <div><dt data-i18n="hero.meta.loc.dt">거점</dt><dd data-i18n="hero.meta.loc.dd">안동시 경동로 574</dd></div>
+      <div><dt data-i18n="hero.meta.type.dt">형태</dt><dd data-i18n="hero.meta.type.dd">협동조합</dd></div>
     </dl>
   </div>
   <p class="hero-down">SCROLL<i></i></p>
@@ -296,21 +311,21 @@ footer small{color:var(--mute);font-size:11.5px;line-height:2.1;display:block}
 <section class="sec" id="about">
   <div class="wrap">
     <div class="sec-top">
-      <p class="lab">01 &nbsp;소개</p>
+      <p class="lab">01 &nbsp;<span data-i18n="nav.about">소개</span></p>
       <h2 class="lead" id="lead"></h2>
     </div>
     <div class="about-grid">
       <div></div>
       <div class="about-copy">
-        <p>전통문화를 <b>보존해야 할 유산</b>으로만 소개하면 관공서는 좋아하지만 손님은 지갑을 열지 않습니다. 저희는 같은 것을 <b>“하회마을에서 90분간 조선시대 주막을 직접 겪는 하루”</b>처럼 구체적인 경험으로 만듭니다.</p>
-        <p>체험을 마친 손님은 그 자리에서 종가음식을 먹고, 안동 전통주와 특산품을 사서 돌아갑니다. 그리고 집에서 다시 주문합니다. <b>체험·식사·판매·재구매가 한 조합 안에서 이어지는 구조</b>가 문화링크의 일하는 방식입니다.</p>
-        <p>조합원이 각자 흩어져 장사하면 남는 것이 없습니다. 공동 브랜드와 공동 고객 명부를 조합이 함께 소유하기 때문에, 시간이 갈수록 강해지는 쪽을 택했습니다.</p>
+        <p data-i18n-html="about.p1">전통문화를 <b>보존해야 할 유산</b>으로만 소개하면 관공서는 좋아하지만 손님은 지갑을 열지 않습니다. 저희는 같은 것을 <b>“하회마을에서 90분간 조선시대 주막을 직접 겪는 하루”</b>처럼 구체적인 경험으로 만듭니다.</p>
+        <p data-i18n-html="about.p2">체험을 마친 손님은 그 자리에서 종가음식을 먹고, 안동 전통주와 특산품을 사서 돌아갑니다. 그리고 집에서 다시 주문합니다. <b>체험·식사·판매·재구매가 한 조합 안에서 이어지는 구조</b>가 문화링크의 일하는 방식입니다.</p>
+        <p data-i18n-html="about.p3">조합원이 각자 흩어져 장사하면 남는 것이 없습니다. 공동 브랜드와 공동 고객 명부를 조합이 함께 소유하기 때문에, 시간이 갈수록 강해지는 쪽을 택했습니다.</p>
       </div>
     </div>
     <dl class="facts">
-      <div><dt>설립</dt><dd>협동조합 · 조합원 공동운영</dd><dd class="big">2014</dd></div>
-      <div><dt>운영 사업축</dt><dd>체험 · 식사 · 판매 · 공간 · 기획</dd><dd class="big">5</dd></div>
-      <div><dt>거점</dt><dd>경상북도 안동시 · 하회마을</dd><dd class="big">안동</dd></div>
+      <div><dt data-i18n="hero.meta.est.dt">설립</dt><dd data-i18n="facts.est.dd">협동조합 · 조합원 공동운영</dd><dd class="big">2014</dd></div>
+      <div><dt data-i18n="facts.axis.dt">운영 사업축</dt><dd data-i18n="facts.axis.dd">체험 · 식사 · 판매 · 공간 · 기획</dd><dd class="big">5</dd></div>
+      <div><dt data-i18n="hero.meta.loc.dt">거점</dt><dd data-i18n="facts.loc.dd">경상북도 안동시 · 하회마을</dd><dd class="big" data-i18n="facts.loc.big">안동</dd></div>
     </dl>
   </div>
 </section>
@@ -318,8 +333,8 @@ footer small{color:var(--mute);font-size:11.5px;line-height:2.1;display:block}
 <section class="sec works" id="works">
   <div class="wrap rail-head">
     <div class="sec-top" style="grid-template-columns:130px 1fr">
-      <p class="lab">02 &nbsp;사업</p>
-      <h2>다섯 가지 일을 합니다</h2>
+      <p class="lab">02 &nbsp;<span data-i18n="nav.works">사업</span></p>
+      <h2 data-i18n="works.heading">다섯 가지 일을 합니다</h2>
     </div>
     <p class="lab" style="white-space:nowrap">DRAG →</p>
   </div>
@@ -327,38 +342,38 @@ footer small{color:var(--mute);font-size:11.5px;line-height:2.1;display:block}
     <div class="rail" id="rail">
       <article class="card">
         <div class="ph"><img src="images/p1.jpg" alt="하회마을 야외 주막 체험장"></div>
-        <p class="no"><i></i>01 &nbsp;체험</p>
-        <h3>주막 · 종가음식 체험</h3>
-        <p>하회마을 현장에서 운영하는 주막·종가음식 체험입니다. 가족과 단체가 직접 만들고 맛보는 90분 단위 프로그램으로 구성합니다.</p>
-        <p class="tags">종가음식체험 · 단체·가족 · 현장 운영</p>
+        <p class="no"><i></i>01 &nbsp;<span data-i18n="works.c1.name">체험</span></p>
+        <h3 data-i18n="works.c1.title">주막 · 종가음식 체험</h3>
+        <p data-i18n="works.c1.desc">하회마을 현장에서 운영하는 주막·종가음식 체험입니다. 가족과 단체가 직접 만들고 맛보는 90분 단위 프로그램으로 구성합니다.</p>
+        <p class="tags" data-i18n="works.c1.tags">종가음식체험 · 단체·가족 · 현장 운영</p>
       </article>
       <article class="card">
         <div class="ph"><img src="images/p2.jpg" alt="유기 반상에 차려진 종가음식 상차림"></div>
-        <p class="no"><i></i>02 &nbsp;식사</p>
-        <h3>종가음식 · 식사 운영</h3>
-        <p>체험이 끝난 자리에서 바로 이어지는 식사를 운영합니다. 상차림과 식음 서비스를 직접 맡아 체험과 식사가 끊기지 않게 합니다.</p>
-        <p class="tags">상차림 · 단체 식음 · 야외 운영</p>
+        <p class="no"><i></i>02 &nbsp;<span data-i18n="works.c2.name">식사</span></p>
+        <h3 data-i18n="works.c2.title">종가음식 · 식사 운영</h3>
+        <p data-i18n="works.c2.desc">체험이 끝난 자리에서 바로 이어지는 식사를 운영합니다. 상차림과 식음 서비스를 직접 맡아 체험과 식사가 끊기지 않게 합니다.</p>
+        <p class="tags" data-i18n="works.c2.tags">상차림 · 단체 식음 · 야외 운영</p>
       </article>
       <article class="card">
         <div class="ph"><img src="images/p3.jpg" alt="안동 전통주 선물세트"></div>
-        <p class="no"><i></i>03 &nbsp;판매</p>
-        <h3>안동 전통주 · 특산품</h3>
-        <p>주류 소매 면허를 갖춘 조합이 안동 전통주와 특산품 선물세트를 취급합니다. 현장에서 맛본 상품을 온라인으로 다시 주문할 수 있게 연결합니다.</p>
-        <p class="tags">전통주 소매 · 선물세트 · 전자상거래</p>
+        <p class="no"><i></i>03 &nbsp;<span data-i18n="works.c3.name">판매</span></p>
+        <h3 data-i18n="works.c3.title">안동 전통주 · 특산품</h3>
+        <p data-i18n="works.c3.desc">주류 소매 면허를 갖춘 조합이 안동 전통주와 특산품 선물세트를 취급합니다. 현장에서 맛본 상품을 온라인으로 다시 주문할 수 있게 연결합니다.</p>
+        <p class="tags" data-i18n="works.c3.tags">전통주 소매 · 선물세트 · 전자상거래</p>
       </article>
       <article class="card">
         <div class="ph"><img src="images/p4.jpg" alt="햇살이 드는 한옥 실내, 좌탁과 방석이 놓인 대여 공간"></div>
-        <p class="no"><i></i>04 &nbsp;공간</p>
-        <h3>공간 운영 · 대여</h3>
-        <p>하회마을 숙소와 체험 공간을 운영하고, 한복과 행사 장비를 대여합니다. 공간 연출과 실내 시공까지 조합 안에서 처리합니다.</p>
-        <p class="tags">민박·숙소 · 한복·장비 대여 · 공간 연출</p>
+        <p class="no"><i></i>04 &nbsp;<span data-i18n="works.c4.name">공간</span></p>
+        <h3 data-i18n="works.c4.title">공간 운영 · 대여</h3>
+        <p data-i18n="works.c4.desc">하회마을 숙소와 체험 공간을 운영하고, 한복과 행사 장비를 대여합니다. 공간 연출과 실내 시공까지 조합 안에서 처리합니다.</p>
+        <p class="tags" data-i18n="works.c4.tags">민박·숙소 · 한복·장비 대여 · 공간 연출</p>
       </article>
       <article class="card">
         <div class="ph"><img src="images/p5.jpg" alt="현장에서 촬영한 홍보 영상 장면"></div>
-        <p class="no"><i></i>05 &nbsp;기획</p>
-        <h3>기획 · 콘텐츠 · 교육</h3>
-        <p>공연기획과 행사대행, 광고·디자인, 영상 콘텐츠 제작과 마케팅 교육을 맡습니다. 지자체·기관 사업의 기획부터 정산까지 진행합니다.</p>
-        <p class="tags">공연·행사대행 · 광고·디자인 · 영상·교육</p>
+        <p class="no"><i></i>05 &nbsp;<span data-i18n="works.c5.name">기획</span></p>
+        <h3 data-i18n="works.c5.title">기획 · 콘텐츠 · 교육</h3>
+        <p data-i18n="works.c5.desc">공연기획과 행사대행, 광고·디자인, 영상 콘텐츠 제작과 마케팅 교육을 맡습니다. 지자체·기관 사업의 기획부터 정산까지 진행합니다.</p>
+        <p class="tags" data-i18n="works.c5.tags">공연·행사대행 · 광고·디자인 · 영상·교육</p>
       </article>
     </div>
   </div>
@@ -371,8 +386,8 @@ footer small{color:var(--mute);font-size:11.5px;line-height:2.1;display:block}
 <section class="sec" id="flow">
   <div class="wrap">
     <div class="sec-top">
-      <p class="lab">03 &nbsp;운영 구조</p>
-      <h2>한 번 온 손님이 다시 이어지도록</h2>
+      <p class="lab">03 &nbsp;<span data-i18n="nav.flow">운영 구조</span></p>
+      <h2 data-i18n="flow.heading">한 번 온 손님이 다시 이어지도록</h2>
     </div>
     <div class="flow-stage">
       <div class="dial">
@@ -398,19 +413,19 @@ footer small{color:var(--mute);font-size:11.5px;line-height:2.1;display:block}
 <section class="sec gal" id="gallery">
   <div class="wrap rail-head">
     <div class="sec-top" style="grid-template-columns:130px 1fr">
-      <p class="lab">04 &nbsp;현장</p>
-      <h2>현장의 기록</h2>
+      <p class="lab">04 &nbsp;<span data-i18n="nav.gallery">현장</span></p>
+      <h2 data-i18n="gallery.heading">현장의 기록</h2>
     </div>
     <p class="lab" style="white-space:nowrap">DRAG →</p>
   </div>
   <div class="rail-outer" id="galOuter">
     <div class="gstrip" id="gstrip">
-      <figure><img src="images/g1.jpg" alt="전통주를 담은 잔을 두 손으로 든 참가자"><figcaption>체험 중 전통주 시음</figcaption></figure>
-      <figure><img src="images/g2.jpg" alt="전통주를 잔에 따르는 진행자"><figcaption>주막 운영</figcaption></figure>
-      <figure><img src="images/g3.jpg" alt="도마 위에 준비된 꼬치 재료"><figcaption>식사 준비</figcaption></figure>
-      <figure><img src="images/g4.jpg" alt="접시에 담긴 삼색 나물"><figcaption>종가 상차림</figcaption></figure>
-      <figure><img src="images/g5.jpg" alt="초가집 앞에 차려진 야외 테이블"><figcaption>하회마을 체험장</figcaption></figure>
-      <figure><img src="images/g6.jpg" alt="햇살이 드는 한옥 실내, 좌탁과 방석이 놓인 공간"><figcaption>숙소·실내 공간</figcaption></figure>
+      <figure><img src="images/g1.jpg" alt="전통주를 담은 잔을 두 손으로 든 참가자"><figcaption data-i18n="gallery.g1">체험 중 전통주 시음</figcaption></figure>
+      <figure><img src="images/g2.jpg" alt="전통주를 잔에 따르는 진행자"><figcaption data-i18n="gallery.g2">주막 운영</figcaption></figure>
+      <figure><img src="images/g3.jpg" alt="도마 위에 준비된 꼬치 재료"><figcaption data-i18n="gallery.g3">식사 준비</figcaption></figure>
+      <figure><img src="images/g4.jpg" alt="접시에 담긴 삼색 나물"><figcaption data-i18n="gallery.g4">종가 상차림</figcaption></figure>
+      <figure><img src="images/g5.jpg" alt="초가집 앞에 차려진 야외 테이블"><figcaption data-i18n="gallery.g5">하회마을 체험장</figcaption></figure>
+      <figure><img src="images/g6.jpg" alt="햇살이 드는 한옥 실내, 좌탁과 방석이 놓인 공간"><figcaption data-i18n="gallery.g6">숙소·실내 공간</figcaption></figure>
     </div>
   </div>
 </section>
@@ -418,14 +433,14 @@ footer small{color:var(--mute);font-size:11.5px;line-height:2.1;display:block}
 <section class="cta" id="contact">
   <div class="wrap">
     <div class="sec-top">
-      <p class="lab">05 &nbsp;문의</p>
+      <p class="lab">05 &nbsp;<span data-i18n="nav.contact">문의</span></p>
       <div>
-        <h2>같이 만들 일이 있으면<br>먼저 물어보셔도 됩니다</h2>
-        <p>단체 체험, 지자체·기관 행사, 특산품 입점, 조합원 참여까지. 안동에 오시기 전이라면 일정 조율부터 도와드립니다.</p>
+        <h2 data-i18n-html="contact.heading">같이 만들 일이 있으면<br>먼저 물어보셔도 됩니다</h2>
+        <p data-i18n="contact.desc">단체 체험, 지자체·기관 행사, 특산품 입점, 조합원 참여까지. 안동에 오시기 전이라면 일정 조율부터 도와드립니다.</p>
         <div class="btns">
-          <a class="btn btn-fill magnet" href="mailto:mun_link@naver.com">이메일로 문의하기</a>
+          <a class="btn btn-fill magnet" href="mailto:mun_link@naver.com" data-i18n="contact.btn.email">이메일로 문의하기</a>
           <a class="btn btn-line" href="tel:0548412783">054-841-2783</a>
-          <a class="btn btn-line" href="#works">사업 영역 다시 보기</a>
+          <a class="btn btn-line" href="#works" data-i18n="contact.btn.rework">사업 영역 다시 보기</a>
         </div>
       </div>
     </div>
@@ -435,7 +450,7 @@ footer small{color:var(--mute);font-size:11.5px;line-height:2.1;display:block}
 <footer>
   <div class="wrap">
     <span class="lock"><img src="images/mark.png" alt=""><span class="wm">문화링크협동조합<small>CULTURE LINK COOPERATIVE</small></span></span>
-    <small>문화링크협동조합 · 대표 김영숙 · 사업자등록번호 508-81-38111 · 주류판매신고 508-5-36883<br>
+    <small data-i18n-html="footer.info">문화링크협동조합 · 대표 김영숙 · 사업자등록번호 508-81-38111 · 주류판매신고 508-5-36883<br>
     경상북도 안동시 경동로 574, 1층 (우)36674 · 2014년 4월 설립<br>
     전화 <a class="lk" href="tel:0548412783">054-841-2783</a> · 이메일 <a class="lk" href="mailto:mun_link@naver.com">mun_link@naver.com</a></small>
   </div>
@@ -567,14 +582,57 @@ nB.addEventListener('click', function(){ railCtl.step(1); });
 setInterval(function(){ pB.disabled = railCtl.atStart(); nB.disabled = railCtl.atEnd(); }, 300);
 
 /* 순환 구조 다이얼 */
-var STEPS = [
-  {t:'발견', d:'검색과 현장 QR로 만납니다'},
-  {t:'예약', d:'날짜와 인원을 확정합니다'},
-  {t:'체험', d:'하회마을에서 직접 만듭니다'},
-  {t:'식사', d:'그 자리에서 종가음식을 먹습니다'},
-  {t:'구매', d:'전통주와 특산품을 가져갑니다'},
-  {t:'재구매', d:'집에서 온라인으로 다시 찾습니다'}
-];
+var STEPS_I18N = {
+  ko:[
+    {t:'발견', d:'검색과 현장 QR로 만납니다'},
+    {t:'예약', d:'날짜와 인원을 확정합니다'},
+    {t:'체험', d:'하회마을에서 직접 만듭니다'},
+    {t:'식사', d:'그 자리에서 종가음식을 먹습니다'},
+    {t:'구매', d:'전통주와 특산품을 가져갑니다'},
+    {t:'재구매', d:'집에서 온라인으로 다시 찾습니다'}
+  ],
+  en:[
+    {t:'Discover', d:'Found through search and on-site QR codes'},
+    {t:'Book', d:'Confirm the date and number of guests'},
+    {t:'Experience', d:'Make it yourself in Hahoe Village'},
+    {t:'Dine', d:'Eat jongga cuisine on the spot'},
+    {t:'Buy', d:'Take home traditional liquor and specialties'},
+    {t:'Reorder', d:'Come back online, from home'}
+  ],
+  ja:[
+    {t:'発見', d:'検索と現場QRで出会います'},
+    {t:'予約', d:'日付と人数を確定します'},
+    {t:'体験', d:'河回村で直接作ります'},
+    {t:'食事', d:'その場で宗家料理を食べます'},
+    {t:'購入', d:'伝統酒と特産品を持ち帰ります'},
+    {t:'リピート', d:'家からオンラインで再び訪れます'}
+  ],
+  it:[
+    {t:'Scoperta', d:'Si incontra tramite ricerca online e QR code sul posto'},
+    {t:'Prenotazione', d:'Si conferma la data e il numero di partecipanti'},
+    {t:'Esperienza', d:'Si crea con le proprie mani nel villaggio di Hahoe'},
+    {t:'Pasto', d:'Si mangia la cucina jongga sul posto'},
+    {t:'Acquisto', d:'Si porta a casa liquori tradizionali e prodotti tipici'},
+    {t:'Riacquisto', d:'Si ritorna online, da casa'}
+  ],
+  de:[
+    {t:'Entdecken', d:'Über Suche und QR-Codes vor Ort gefunden'},
+    {t:'Buchen', d:'Datum und Teilnehmerzahl werden bestätigt'},
+    {t:'Erleben', d:'Selbst gemacht im Dorf Hahoe'},
+    {t:'Essen', d:'Jongga-Küche wird vor Ort gegessen'},
+    {t:'Kaufen', d:'Traditioneller Alkohol und Spezialitäten werden mitgenommen'},
+    {t:'Wiederkaufen', d:'Von zu Hause aus online wiederkommen'}
+  ],
+  pl:[
+    {t:'Odkrycie', d:'Znaleziony dzięki wyszukiwaniu i kodom QR na miejscu'},
+    {t:'Rezerwacja', d:'Potwierdzenie terminu i liczby uczestników'},
+    {t:'Doświadczenie', d:'Tworzysz sam we wiosce Hahoe'},
+    {t:'Posiłek', d:'Jedzenie kuchni jongga na miejscu'},
+    {t:'Zakup', d:'Zabranie do domu tradycyjnego alkoholu i specjałów'},
+    {t:'Ponowny zakup', d:'Powrót online, z domu'}
+  ]
+};
+var STEPS = STEPS_I18N.ko;
 var NS = 'http://www.w3.org/2000/svg', nodesG = document.getElementById('nodes'), listEl = document.getElementById('flowList');
 var prog = document.getElementById('prog'), CIRC = 2*Math.PI*126;
 prog.style.strokeDasharray = CIRC; prog.style.strokeDashoffset = CIRC;
@@ -600,8 +658,10 @@ STEPS.forEach(function(s,i){
   listEl.appendChild(b); buttons.push(b);
 });
 var stepNo = document.getElementById('stepNo'), stepTitle = document.getElementById('stepTitle'), stepDesc = document.getElementById('stepDesc');
+var currentStep = 0;
 function select(i, user){
   if(user) userPicked = true;
+  currentStep = i;
   prog.style.strokeDashoffset = CIRC*(1-(i+1)/STEPS.length);
   nodes.forEach(function(n,j){
     var on = j <= i;
@@ -616,11 +676,224 @@ function select(i, user){
 }
 select(0,false);
 
-/* 문장 채우기 */
-var LEAD_LINES = ['전통은 지키는 것이 아니라,', '오늘 팔리는 경험으로 옮기는 것입니다.'];
-document.getElementById('lead').innerHTML = LEAD_LINES.map(function(line){
-  return line.split(' ').map(function(w){ return '<w>'+w+'</w>'; }).join(' ');
-}).join('<br>');
+/* 다국어 */
+var LEAD_I18N = {
+  ko:['전통은 지키는 것이 아니라,', '오늘 팔리는 경험으로 옮기는 것입니다.'],
+  en:['Tradition isn\'t something to preserve —', 'it\'s something to turn into an experience people buy today.'],
+  ja:['伝統は守るものではなく、', '今日売れる体験へと移すことです。'],
+  it:['La tradizione non va custodita,', 'va trasformata in un\'esperienza che si vende oggi.'],
+  de:['Tradition ist nicht etwas, das man bewahrt —', 'sie wird zu einem Erlebnis, das man heute verkauft.'],
+  pl:['Tradycji się nie chroni —', 'przekształca się ją w doświadczenie, które sprzedaje się dziś.']
+};
+var I18N = {
+  ko:{
+    'nav.about':'소개','nav.works':'사업','nav.flow':'운영 구조','nav.gallery':'현장','nav.contact':'문의',
+    'hero.label':'경북 안동 · 하회마을 · SINCE 2014','hero.line1':'체험에서 식탁까지,','hero.line2':'안동을 잇습니다',
+    'hero.sub':'하회마을을 찾은 사람이 보고 끝나는 여행 대신, 직접 만들고 맛보고 집에서도 다시 찾게 되는 하루를 설계합니다.',
+    'hero.meta.est.dt':'설립','hero.meta.est.dd':'2014년 4월','hero.meta.loc.dt':'거점','hero.meta.loc.dd':'안동시 경동로 574',
+    'hero.meta.type.dt':'형태','hero.meta.type.dd':'협동조합',
+    'about.p1':'전통문화를 <b>보존해야 할 유산</b>으로만 소개하면 관공서는 좋아하지만 손님은 지갑을 열지 않습니다. 저희는 같은 것을 <b>“하회마을에서 90분간 조선시대 주막을 직접 겪는 하루”</b>처럼 구체적인 경험으로 만듭니다.',
+    'about.p2':'체험을 마친 손님은 그 자리에서 종가음식을 먹고, 안동 전통주와 특산품을 사서 돌아갑니다. 그리고 집에서 다시 주문합니다. <b>체험·식사·판매·재구매가 한 조합 안에서 이어지는 구조</b>가 문화링크의 일하는 방식입니다.',
+    'about.p3':'조합원이 각자 흩어져 장사하면 남는 것이 없습니다. 공동 브랜드와 공동 고객 명부를 조합이 함께 소유하기 때문에, 시간이 갈수록 강해지는 쪽을 택했습니다.',
+    'facts.est.dd':'협동조합 · 조합원 공동운영','facts.axis.dt':'운영 사업축','facts.axis.dd':'체험 · 식사 · 판매 · 공간 · 기획',
+    'facts.loc.dd':'경상북도 안동시 · 하회마을','facts.loc.big':'안동',
+    'works.heading':'다섯 가지 일을 합니다',
+    'works.c1.name':'체험','works.c1.title':'주막 · 종가음식 체험','works.c1.desc':'하회마을 현장에서 운영하는 주막·종가음식 체험입니다. 가족과 단체가 직접 만들고 맛보는 90분 단위 프로그램으로 구성합니다.','works.c1.tags':'종가음식체험 · 단체·가족 · 현장 운영',
+    'works.c2.name':'식사','works.c2.title':'종가음식 · 식사 운영','works.c2.desc':'체험이 끝난 자리에서 바로 이어지는 식사를 운영합니다. 상차림과 식음 서비스를 직접 맡아 체험과 식사가 끊기지 않게 합니다.','works.c2.tags':'상차림 · 단체 식음 · 야외 운영',
+    'works.c3.name':'판매','works.c3.title':'안동 전통주 · 특산품','works.c3.desc':'주류 소매 면허를 갖춘 조합이 안동 전통주와 특산품 선물세트를 취급합니다. 현장에서 맛본 상품을 온라인으로 다시 주문할 수 있게 연결합니다.','works.c3.tags':'전통주 소매 · 선물세트 · 전자상거래',
+    'works.c4.name':'공간','works.c4.title':'공간 운영 · 대여','works.c4.desc':'하회마을 숙소와 체험 공간을 운영하고, 한복과 행사 장비를 대여합니다. 공간 연출과 실내 시공까지 조합 안에서 처리합니다.','works.c4.tags':'민박·숙소 · 한복·장비 대여 · 공간 연출',
+    'works.c5.name':'기획','works.c5.title':'기획 · 콘텐츠 · 교육','works.c5.desc':'공연기획과 행사대행, 광고·디자인, 영상 콘텐츠 제작과 마케팅 교육을 맡습니다. 지자체·기관 사업의 기획부터 정산까지 진행합니다.','works.c5.tags':'공연·행사대행 · 광고·디자인 · 영상·교육',
+    'flow.heading':'한 번 온 손님이 다시 이어지도록',
+    'gallery.heading':'현장의 기록',
+    'gallery.g1':'체험 중 전통주 시음','gallery.g2':'주막 운영','gallery.g3':'식사 준비','gallery.g4':'종가 상차림','gallery.g5':'하회마을 체험장','gallery.g6':'숙소·실내 공간',
+    'contact.heading':'같이 만들 일이 있으면<br>먼저 물어보셔도 됩니다',
+    'contact.desc':'단체 체험, 지자체·기관 행사, 특산품 입점, 조합원 참여까지. 안동에 오시기 전이라면 일정 조율부터 도와드립니다.',
+    'contact.btn.email':'이메일로 문의하기','contact.btn.rework':'사업 영역 다시 보기',
+    'footer.info':'문화링크협동조합 · 대표 김영숙 · 사업자등록번호 508-81-38111 · 주류판매신고 508-5-36883<br>경상북도 안동시 경동로 574, 1층 (우)36674 · 2014년 4월 설립<br>전화 <a class="lk" href="tel:0548412783">054-841-2783</a> · 이메일 <a class="lk" href="mailto:mun_link@naver.com">mun_link@naver.com</a>'
+  },
+  en:{
+    'nav.about':'About','nav.works':'Business','nav.flow':'How it works','nav.gallery':'Gallery','nav.contact':'Contact',
+    'hero.label':'Andong, Korea · Hahoe Village · SINCE 2014','hero.line1':'From experience to table,','hero.line2':'we connect Andong.',
+    'hero.sub':'Instead of a trip that ends with just looking, we design a day where visitors to Hahoe Village make, taste, and want to return to — even after they\'re back home.',
+    'hero.meta.est.dt':'Founded','hero.meta.est.dd':'April 2014','hero.meta.loc.dt':'Location','hero.meta.loc.dd':'574 Gyeongdong-ro, Andong',
+    'hero.meta.type.dt':'Structure','hero.meta.type.dd':'Cooperative',
+    'about.p1':'If you present traditional culture only as <b>heritage to be preserved</b>, government offices are pleased — but visitors don\'t open their wallets. We turn the same tradition into a concrete experience, like <b>"a day spent living a Joseon-era tavern for 90 minutes in Hahoe Village."</b>',
+    'about.p2':'After the experience, guests eat traditional jongga (head-family) cuisine on the spot, then buy Andong\'s traditional liquor and specialty goods to take home. And they order again from home. <b>A structure where experience, dining, sales, and repeat purchases all connect within one cooperative</b> — that\'s how Culture Link works.',
+    'about.p3':'If each member ran their own business separately, there would be nothing left over. Because the cooperative jointly owns the shared brand and shared customer list, we chose the path that grows stronger over time.',
+    'facts.est.dd':'Cooperative · jointly run by members','facts.axis.dt':'Business areas','facts.axis.dd':'Experience · Dining · Sales · Space · Planning',
+    'facts.loc.dd':'Gyeongsangbuk-do, Andong · Hahoe Village','facts.loc.big':'Andong',
+    'works.heading':'We do five things',
+    'works.c1.name':'Experience','works.c1.title':'Tavern & Jongga Cuisine Experience','works.c1.desc':'A tavern and jongga-cuisine experience run on-site in Hahoe Village. Structured as 90-minute programs where families and groups make and taste the food themselves.','works.c1.tags':'Jongga cuisine experience · Groups & families · On-site operation',
+    'works.c2.name':'Dining','works.c2.title':'Jongga Cuisine & Dining','works.c2.desc':'We run the meal that follows right after the experience. We handle table-setting and food service ourselves so the experience flows seamlessly into dining.','works.c2.tags':'Table setting · Group dining · Outdoor operation',
+    'works.c3.name':'Sales','works.c3.title':'Andong Traditional Liquor & Specialties','works.c3.desc':'As a licensed liquor retailer, the cooperative handles Andong traditional liquor and specialty gift sets. We connect products tasted on-site to online reordering.','works.c3.tags':'Traditional liquor retail · Gift sets · E-commerce',
+    'works.c4.name':'Space','works.c4.title':'Space Operation & Rental','works.c4.desc':'We operate lodging and experience spaces in Hahoe Village, and rent out hanbok and event equipment. Space styling and interior work are all handled in-house.','works.c4.tags':'Guesthouse & lodging · Hanbok & equipment rental · Space styling',
+    'works.c5.name':'Planning','works.c5.title':'Planning, Content & Education','works.c5.desc':'We handle performance planning, event management, advertising & design, video content production, and marketing education — running local government and institutional projects from planning through to settlement.','works.c5.tags':'Performance & event management · Advertising & design · Video & education',
+    'flow.heading':'So that a first-time guest keeps coming back',
+    'gallery.heading':'Moments from the field',
+    'gallery.g1':'Tasting traditional liquor during the experience','gallery.g2':'Running the tavern','gallery.g3':'Preparing the meal','gallery.g4':'Jongga table setting','gallery.g5':'The Hahoe Village experience site','gallery.g6':'Lodging & indoor space',
+    'contact.heading':'If there\'s something we could<br>make together, feel free to ask first',
+    'contact.desc':'From group experiences and local government/institutional events to specialty product placement and cooperative membership — if you haven\'t come to Andong yet, we\'ll help coordinate the schedule first.',
+    'contact.btn.email':'Contact by email','contact.btn.rework':'Revisit our business areas',
+    'footer.info':'Culture Link Cooperative · CEO Youngsuk Kim · Business Registration No. 508-81-38111 · Liquor Retail License No. 508-5-36883<br>574 Gyeongdong-ro, Andong-si, Gyeongsangbuk-do, South Korea (36674)<br>Founded April 2014<br>Tel <a class="lk" href="tel:0548412783">054-841-2783</a> · Email <a class="lk" href="mailto:mun_link@naver.com">mun_link@naver.com</a>'
+  },
+  ja:{
+    'nav.about':'概要','nav.works':'事業','nav.flow':'仕組み','nav.gallery':'現場','nav.contact':'お問い合わせ',
+    'hero.label':'韓国 安東 · 河回村 · SINCE 2014','hero.line1':'体験から食卓まで、','hero.line2':'安東をつなぎます',
+    'hero.sub':'河回村を訪れて見るだけで終わる旅ではなく、直接作り、味わい、家に帰ってからもまた探すようになる一日を設計します。',
+    'hero.meta.est.dt':'設立','hero.meta.est.dd':'2014年4月','hero.meta.loc.dt':'拠点','hero.meta.loc.dd':'安東市 慶東路574',
+    'hero.meta.type.dt':'形態','hero.meta.type.dd':'協同組合',
+    'about.p1':'伝統文化を<b>保存すべき遺産</b>としてだけ紹介すると、官公庁は喜びますが、お客様は財布を開きません。私たちは同じものを<b>「河回村で90分間、朝鮮時代の酒幕（チュマク）を直接体験する一日」</b>のような具体的な体験に変えます。',
+    'about.p2':'体験を終えたお客様はその場で宗家料理を食べ、安東の伝統酒と特産品を購入して帰ります。そして家でまた注文します。<b>体験・食事・販売・リピート購入が一つの組合の中でつながる仕組み</b>が文化リンクの働き方です。',
+    'about.p3':'組合員がそれぞれ別々に商売をすると、何も残りません。共同ブランドと共同顧客名簿を組合が共に所有するため、時間が経つほど強くなる道を選びました。',
+    'facts.est.dd':'協同組合・組合員共同運営','facts.axis.dt':'事業軸','facts.axis.dd':'体験・食事・販売・空間・企画',
+    'facts.loc.dd':'慶尚北道安東市・河回村','facts.loc.big':'安東',
+    'works.heading':'5つの事業を行っています',
+    'works.c1.name':'体験','works.c1.title':'酒幕・宗家料理体験','works.c1.desc':'河回村の現場で運営する酒幕・宗家料理体験です。家族や団体が直接作って味わう90分単位のプログラムで構成します。','works.c1.tags':'宗家料理体験・団体・家族・現場運営',
+    'works.c2.name':'食事','works.c2.title':'宗家料理・食事運営','works.c2.desc':'体験が終わった場でそのまま続く食事を運営します。膳立てと飲食サービスを直接担当し、体験と食事が途切れないようにします。','works.c2.tags':'膳立て・団体飲食・屋外運営',
+    'works.c3.name':'販売','works.c3.title':'安東伝統酒・特産品','works.c3.desc':'酒類小売免許を持つ組合が安東伝統酒と特産品ギフトセットを取り扱います。現場で味わった商品をオンラインで再注文できるようつなげます。','works.c3.tags':'伝統酒小売・ギフトセット・EC',
+    'works.c4.name':'空間','works.c4.title':'空間運営・レンタル','works.c4.desc':'河回村の宿泊施設と体験空間を運営し、韓服とイベント機材をレンタルします。空間演出から内装施工まで組合内で対応します。','works.c4.tags':'民泊・宿泊・韓服・機材レンタル・空間演出',
+    'works.c5.name':'企画','works.c5.title':'企画・コンテンツ・教育','works.c5.desc':'公演企画と行事代行、広告・デザイン、映像コンテンツ制作とマーケティング教育を担当します。自治体・機関事業の企画から精算まで進めます。','works.c5.tags':'公演・行事代行・広告・デザイン・映像・教育',
+    'flow.heading':'一度来たお客様がまたつながるように',
+    'gallery.heading':'現場の記録',
+    'gallery.g1':'体験中の伝統酒試飲','gallery.g2':'酒幕運営','gallery.g3':'食事の準備','gallery.g4':'宗家の膳立て','gallery.g5':'河回村体験場','gallery.g6':'宿泊・室内空間',
+    'contact.heading':'一緒に作ることがあれば<br>先にお問い合わせください',
+    'contact.desc':'団体体験、自治体・機関の行事、特産品の出店、組合員参加まで。安東にいらっしゃる前でしたら、日程調整からお手伝いします。',
+    'contact.btn.email':'メールでお問い合わせ','contact.btn.rework':'事業領域を見る',
+    'footer.info':'文化リンク協同組合 · 代表 キム・ヨンスク · 事業者登録番号 508-81-38111 · 酒類販売申告 508-5-36883<br>大韓民国 慶尚北道安東市 慶東路574, 1階（郵便番号36674）<br>2014年4月設立<br>電話 <a class="lk" href="tel:0548412783">054-841-2783</a> · メール <a class="lk" href="mailto:mun_link@naver.com">mun_link@naver.com</a>'
+  },
+  it:{
+    'nav.about':'Chi siamo','nav.works':'Attività','nav.flow':'Come funziona','nav.gallery':'Galleria','nav.contact':'Contatti',
+    'hero.label':'Andong, Corea del Sud · Villaggio di Hahoe · SINCE 2014','hero.line1':'Dall\'esperienza alla tavola,','hero.line2':'colleghiamo Andong.',
+    'hero.sub':'Invece di un viaggio che finisce con il semplice guardare, progettiamo una giornata in cui chi visita il villaggio di Hahoe crea, assapora e desidera tornare anche una volta a casa.',
+    'hero.meta.est.dt':'Fondazione','hero.meta.est.dd':'Aprile 2014','hero.meta.loc.dt':'Sede','hero.meta.loc.dd':'574 Gyeongdong-ro, Andong',
+    'hero.meta.type.dt':'Struttura','hero.meta.type.dd':'Cooperativa',
+    'about.p1':'Se si presenta la cultura tradizionale solo come <b>un patrimonio da conservare</b>, gli enti pubblici sono contenti, ma i visitatori non aprono il portafoglio. Noi trasformiamo la stessa tradizione in un\'esperienza concreta, come <b>"una giornata di 90 minuti a vivere una taverna dell\'epoca Joseon nel villaggio di Hahoe."</b>',
+    'about.p2':'Dopo l\'esperienza, gli ospiti mangiano sul posto la cucina jongga (della famiglia capostipite), poi acquistano liquori tradizionali e prodotti tipici di Andong da portare a casa. E poi ordinano di nuovo da casa. <b>Una struttura in cui esperienza, ristorazione, vendita e riacquisto si collegano tutti all\'interno di un\'unica cooperativa</b> — così lavora Culture Link.',
+    'about.p3':'Se ogni socio gestisse la propria attività separatamente, non rimarrebbe nulla. Poiché il marchio comune e l\'elenco clienti comune sono di proprietà condivisa della cooperativa, abbiamo scelto la strada che si rafforza col tempo.',
+    'facts.est.dd':'Cooperativa · gestita insieme dai soci','facts.axis.dt':'Aree di attività','facts.axis.dd':'Esperienza · Ristorazione · Vendita · Spazi · Progettazione',
+    'facts.loc.dd':'Gyeongsangbuk-do, Andong · Villaggio di Hahoe','facts.loc.big':'Andong',
+    'works.heading':'Facciamo cinque cose',
+    'works.c1.name':'Esperienza','works.c1.title':'Esperienza di taverna e cucina jongga','works.c1.desc':'Un\'esperienza di taverna e cucina jongga gestita direttamente nel villaggio di Hahoe. Programmi da 90 minuti in cui famiglie e gruppi preparano e assaggiano il cibo di persona.','works.c1.tags':'Esperienza cucina jongga · Gruppi e famiglie · Gestione in loco',
+    'works.c2.name':'Ristorazione','works.c2.title':'Cucina jongga e ristorazione','works.c2.desc':'Gestiamo il pasto che segue subito dopo l\'esperienza. Ci occupiamo direttamente dell\'apparecchiatura e del servizio, così l\'esperienza si collega senza interruzioni al pasto.','works.c2.tags':'Apparecchiatura · Ristorazione di gruppo · Gestione all\'aperto',
+    'works.c3.name':'Vendita','works.c3.title':'Liquori tradizionali e prodotti tipici di Andong','works.c3.desc':'In qualità di rivenditore autorizzato di liquori, la cooperativa tratta liquori tradizionali di Andong e cofanetti regalo di prodotti tipici. Colleghiamo i prodotti assaggiati sul posto al riordino online.','works.c3.tags':'Vendita liquori tradizionali · Cofanetti regalo · E-commerce',
+    'works.c4.name':'Spazi','works.c4.title':'Gestione e noleggio spazi','works.c4.desc':'Gestiamo alloggi e spazi per esperienze nel villaggio di Hahoe e noleggiamo hanbok e attrezzature per eventi. Allestimento degli spazi e lavori d\'interni sono gestiti internamente.','works.c4.tags':'Guesthouse e alloggi · Noleggio hanbok e attrezzature · Allestimento spazi',
+    'works.c5.name':'Progettazione','works.c5.title':'Progettazione, contenuti e formazione','works.c5.desc':'Ci occupiamo di pianificazione di spettacoli, organizzazione di eventi, pubblicità e design, produzione di contenuti video e formazione in marketing, seguendo i progetti di enti locali e istituzioni dalla pianificazione al rendiconto.','works.c5.tags':'Spettacoli ed eventi · Pubblicità e design · Video e formazione',
+    'flow.heading':'Perché chi viene una volta continui a tornare',
+    'gallery.heading':'Momenti dal campo',
+    'gallery.g1':'Degustazione di liquori tradizionali durante l\'esperienza','gallery.g2':'Gestione della taverna','gallery.g3':'Preparazione del pasto','gallery.g4':'Apparecchiatura jongga','gallery.g5':'Il sito dell\'esperienza nel villaggio di Hahoe','gallery.g6':'Alloggio e spazi interni',
+    'contact.heading':'Se c\'è qualcosa da<br>creare insieme, scrivici pure',
+    'contact.desc':'Dalle esperienze di gruppo, agli eventi di enti locali e istituzioni, alla vendita di prodotti tipici, fino alla partecipazione come socio. Se non sei ancora venuto ad Andong, ti aiutiamo prima a organizzare il programma.',
+    'contact.btn.email':'Contattaci via email','contact.btn.rework':'Rivedi le nostre attività',
+    'footer.info':'Culture Link Cooperative · CEO Youngsuk Kim · N. registrazione attività 508-81-38111 · Licenza vendita liquori 508-5-36883<br>574 Gyeongdong-ro, Andong-si, Gyeongsangbuk-do, Corea del Sud (36674)<br>Fondata nell\'aprile 2014<br>Tel <a class="lk" href="tel:0548412783">054-841-2783</a> · Email <a class="lk" href="mailto:mun_link@naver.com">mun_link@naver.com</a>'
+  },
+  de:{
+    'nav.about':'Über uns','nav.works':'Angebot','nav.flow':'Ablauf','nav.gallery':'Einblicke','nav.contact':'Kontakt',
+    'hero.label':'Andong, Korea · Dorf Hahoe · SINCE 2014','hero.line1':'Vom Erlebnis bis zum Tisch –','hero.line2':'wir verbinden Andong.',
+    'hero.sub':'Statt einer Reise, die mit bloßem Zuschauen endet, gestalten wir einen Tag, an dem Besucher des Dorfes Hahoe selbst kochen, probieren und sich wünschen zurückzukehren – auch wenn sie längst wieder zu Hause sind.',
+    'hero.meta.est.dt':'Gegründet','hero.meta.est.dd':'April 2014','hero.meta.loc.dt':'Standort','hero.meta.loc.dd':'574 Gyeongdong-ro, Andong',
+    'hero.meta.type.dt':'Rechtsform','hero.meta.type.dd':'Genossenschaft',
+    'about.p1':'Wer traditionelle Kultur nur als <b>zu bewahrendes Erbe</b> präsentiert, erfreut Behörden, aber Besucher öffnen dafür nicht den Geldbeutel. Wir machen daraus ein konkretes Erlebnis, etwa <b>„einen Tag, an dem man 90 Minuten lang eine Wirtsstube der Joseon-Zeit im Dorf Hahoe selbst erlebt.“</b>',
+    'about.p2':'Nach dem Erlebnis essen die Gäste vor Ort traditionelle Jongga-Küche (Küche der Stammfamilie) und kaufen anschließend Andongs traditionellen Alkohol und regionale Spezialitäten zum Mitnehmen. Und sie bestellen von zu Hause aus erneut. <b>Eine Struktur, in der Erlebnis, Verpflegung, Verkauf und Wiederkauf innerhalb einer Genossenschaft zusammenhängen</b> – so arbeitet Culture Link.',
+    'about.p3':'Würde jedes Mitglied getrennt für sich wirtschaften, bliebe nichts übrig. Weil die Genossenschaft die gemeinsame Marke und die gemeinsame Kundenliste gemeinsam besitzt, haben wir den Weg gewählt, der mit der Zeit stärker wird.',
+    'facts.est.dd':'Genossenschaft · gemeinsam geführt von den Mitgliedern','facts.axis.dt':'Geschäftsfelder','facts.axis.dd':'Erlebnis · Verpflegung · Verkauf · Räume · Planung',
+    'facts.loc.dd':'Gyeongsangbuk-do, Andong · Dorf Hahoe','facts.loc.big':'Andong',
+    'works.heading':'Wir machen fünf Dinge',
+    'works.c1.name':'Erlebnis','works.c1.title':'Wirtsstube & Jongga-Küche-Erlebnis','works.c1.desc':'Ein Wirtsstuben- und Jongga-Küche-Erlebnis, das direkt im Dorf Hahoe stattfindet. Als 90-minütige Programme konzipiert, bei denen Familien und Gruppen selbst kochen und probieren.','works.c1.tags':'Jongga-Küche-Erlebnis · Gruppen & Familien · Betrieb vor Ort',
+    'works.c2.name':'Verpflegung','works.c2.title':'Jongga-Küche & Verpflegung','works.c2.desc':'Wir betreiben die Mahlzeit, die direkt im Anschluss an das Erlebnis folgt. Tischdeckung und Bewirtung übernehmen wir selbst, damit Erlebnis und Essen nahtlos ineinander übergehen.','works.c2.tags':'Tischdeckung · Gruppenverpflegung · Betrieb im Freien',
+    'works.c3.name':'Verkauf','works.c3.title':'Andongs traditioneller Alkohol & Spezialitäten','works.c3.desc':'Als lizenzierter Alkoholeinzelhändler führt die Genossenschaft Andongs traditionellen Alkohol und Geschenksets mit regionalen Spezialitäten. Wir verbinden vor Ort probierte Produkte mit der Online-Nachbestellung.','works.c3.tags':'Einzelhandel mit traditionellem Alkohol · Geschenksets · E-Commerce',
+    'works.c4.name':'Räume','works.c4.title':'Raumbetrieb & Vermietung','works.c4.desc':'Wir betreiben Unterkünfte und Erlebnisräume im Dorf Hahoe und verleihen Hanbok sowie Veranstaltungsequipment. Raumgestaltung und Innenausbau übernehmen wir vollständig selbst.','works.c4.tags':'Gästehaus & Unterkunft · Verleih von Hanbok & Ausrüstung · Raumgestaltung',
+    'works.c5.name':'Planung','works.c5.title':'Planung, Inhalte & Bildung','works.c5.desc':'Wir übernehmen Bühnenprogrammplanung, Eventmanagement, Werbung & Design, die Produktion von Videoinhalten sowie Marketingschulungen – und führen Projekte für Kommunen und Institutionen von der Planung bis zur Abrechnung durch.','works.c5.tags':'Bühnenprogramm & Eventmanagement · Werbung & Design · Video & Bildung',
+    'flow.heading':'Damit aus einem Gast immer wieder ein Gast wird',
+    'gallery.heading':'Momente vor Ort',
+    'gallery.g1':'Verkostung von traditionellem Alkohol während des Erlebnisses','gallery.g2':'Betrieb der Wirtsstube','gallery.g3':'Vorbereitung des Essens','gallery.g4':'Jongga-Tischdeckung','gallery.g5':'Der Erlebnisort im Dorf Hahoe','gallery.g6':'Unterkunft & Innenräume',
+    'contact.heading':'Wenn es etwas gibt,<br>das wir gemeinsam schaffen können, fragen Sie ruhig zuerst',
+    'contact.desc':'Von Gruppenerlebnissen über Veranstaltungen von Kommunen und Institutionen bis hin zur Aufnahme regionaler Produkte und der Mitgliedschaft in der Genossenschaft. Wenn Sie noch nicht in Andong sind, helfen wir zunächst bei der Terminabstimmung.',
+    'contact.btn.email':'Per E-Mail kontaktieren','contact.btn.rework':'Geschäftsfelder erneut ansehen',
+    'footer.info':'Culture Link Cooperative · Geschäftsführerin Youngsuk Kim · Gewerberegisternummer 508-81-38111 · Alkoholverkaufslizenz 508-5-36883<br>574 Gyeongdong-ro, Andong-si, Gyeongsangbuk-do, Südkorea (36674)<br>Gegründet im April 2014<br>Tel <a class="lk" href="tel:0548412783">054-841-2783</a> · E-Mail <a class="lk" href="mailto:mun_link@naver.com">mun_link@naver.com</a>'
+  },
+  pl:{
+    'nav.about':'O nas','nav.works':'Działalność','nav.flow':'Jak to działa','nav.gallery':'Galeria','nav.contact':'Kontakt',
+    'hero.label':'Andong, Korea Południowa · Wioska Hahoe · SINCE 2014','hero.line1':'Od doświadczenia do stołu,','hero.line2':'łączymy Andong.',
+    'hero.sub':'Zamiast podróży, która kończy się samym patrzeniem, projektujemy dzień, w którym odwiedzający wioskę Hahoe sami przygotowują, smakują i chcą wracać – nawet po powrocie do domu.',
+    'hero.meta.est.dt':'Założona','hero.meta.est.dd':'Kwiecień 2014','hero.meta.loc.dt':'Siedziba','hero.meta.loc.dd':'574 Gyeongdong-ro, Andong',
+    'hero.meta.type.dt':'Forma','hero.meta.type.dd':'Spółdzielnia',
+    'about.p1':'Jeśli przedstawia się tradycyjną kulturę wyłącznie jako <b>dziedzictwo do zachowania</b>, urzędy są zadowolone, ale goście nie otwierają portfeli. My przekształcamy tę samą tradycję w konkretne doświadczenie, takie jak <b>„dzień spędzony na przeżywaniu przez 90 minut karczmy z epoki Joseon we wiosce Hahoe”</b>.',
+    'about.p2':'Po zakończeniu doświadczenia goście jedzą na miejscu tradycyjną kuchnię jongga (kuchnię rodu założycielskiego), a następnie kupują tradycyjny alkohol i regionalne specjały z Andong, by zabrać je do domu. A potem zamawiają ponownie z domu. <b>Struktura, w której doświadczenie, posiłek, sprzedaż i ponowny zakup łączą się w ramach jednej spółdzielni</b> – tak działa Culture Link.',
+    'about.p3':'Gdyby każdy członek prowadził działalność osobno, nic by z tego nie zostało. Ponieważ spółdzielnia wspólnie posiada wspólną markę i wspólną listę klientów, wybraliśmy drogę, która z czasem staje się silniejsza.',
+    'facts.est.dd':'Spółdzielnia · prowadzona wspólnie przez członków','facts.axis.dt':'Obszary działalności','facts.axis.dd':'Doświadczenie · Posiłki · Sprzedaż · Przestrzenie · Planowanie',
+    'facts.loc.dd':'Gyeongsangbuk-do, Andong · Wioska Hahoe','facts.loc.big':'Andong',
+    'works.heading':'Robimy pięć rzeczy',
+    'works.c1.name':'Doświadczenie','works.c1.title':'Karczma i kuchnia jongga – doświadczenie','works.c1.desc':'Doświadczenie karczmy i kuchni jongga prowadzone bezpośrednio w wiosce Hahoe. Zorganizowane jako 90-minutowe programy, w których rodziny i grupy same przygotowują i smakują potrawy.','works.c1.tags':'Doświadczenie kuchni jongga · Grupy i rodziny · Obsługa na miejscu',
+    'works.c2.name':'Posiłki','works.c2.title':'Kuchnia jongga i posiłki','works.c2.desc':'Prowadzimy posiłek, który następuje bezpośrednio po doświadczeniu. Sami zajmujemy się nakryciem stołu i obsługą, aby doświadczenie płynnie przechodziło w posiłek.','works.c2.tags':'Nakrycie stołu · Posiłki grupowe · Obsługa na świeżym powietrzu',
+    'works.c3.name':'Sprzedaż','works.c3.title':'Tradycyjny alkohol i specjały z Andong','works.c3.desc':'Jako licencjonowany sprzedawca detaliczny alkoholu, spółdzielnia oferuje tradycyjny alkohol z Andong oraz zestawy prezentowe z regionalnymi specjałami. Łączymy produkty spróbowane na miejscu z ponownym zamówieniem online.','works.c3.tags':'Sprzedaż detaliczna tradycyjnego alkoholu · Zestawy prezentowe · E-commerce',
+    'works.c4.name':'Przestrzenie','works.c4.title':'Zarządzanie przestrzenią i wynajem','works.c4.desc':'Prowadzimy noclegi i przestrzenie doświadczeń w wiosce Hahoe oraz wynajmujemy hanbok i sprzęt eventowy. Aranżacją przestrzeni i pracami wykończeniowymi zajmujemy się we własnym zakresie.','works.c4.tags':'Pensjonat i noclegi · Wynajem hanbok i sprzętu · Aranżacja przestrzeni',
+    'works.c5.name':'Planowanie','works.c5.title':'Planowanie, treści i edukacja','works.c5.desc':'Zajmujemy się planowaniem występów, organizacją wydarzeń, reklamą i designem, produkcją treści wideo oraz szkoleniami marketingowymi – prowadząc projekty samorządów i instytucji od planowania po rozliczenie.','works.c5.tags':'Występy i organizacja wydarzeń · Reklama i design · Wideo i edukacja',
+    'flow.heading':'Aby gość, który przyjechał raz, wracał znowu',
+    'gallery.heading':'Chwile z miejsca',
+    'gallery.g1':'Degustacja tradycyjnego alkoholu podczas doświadczenia','gallery.g2':'Prowadzenie karczmy','gallery.g3':'Przygotowanie posiłku','gallery.g4':'Nakrycie stołu jongga','gallery.g5':'Miejsce doświadczenia w wiosce Hahoe','gallery.g6':'Noclegi i przestrzenie wewnętrzne',
+    'contact.heading':'Jeśli jest coś,<br>co możemy zrobić razem, śmiało zapytaj najpierw',
+    'contact.desc':'Od doświadczeń grupowych, przez wydarzenia samorządów i instytucji, po wprowadzanie produktów regionalnych i członkostwo w spółdzielni. Jeśli jeszcze nie byłeś w Andong, najpierw pomożemy ustalić harmonogram.',
+    'contact.btn.email':'Napisz do nas','contact.btn.rework':'Zobacz ponownie obszary działalności',
+    'footer.info':'Culture Link Cooperative · Prezes Youngsuk Kim · Nr rejestracji działalności 508-81-38111 · Zezwolenie na sprzedaż alkoholu 508-5-36883<br>574 Gyeongdong-ro, Andong-si, Gyeongsangbuk-do, Korea Południowa (36674)<br>Założona w kwietniu 2014<br>Tel <a class="lk" href="tel:0548412783">054-841-2783</a> · E-mail <a class="lk" href="mailto:mun_link@naver.com">mun_link@naver.com</a>'
+  }
+};
+
+var curLang = 'ko';
+function t(key){ return (I18N[curLang] && I18N[curLang][key] != null) ? I18N[curLang][key] : I18N.ko[key]; }
+function renderLead(){
+  var leadEl = document.getElementById('lead');
+  var aboutCopyEl = document.querySelector('.about-copy');
+  var already = aboutCopyEl && aboutCopyEl.classList.contains('in');
+  leadEl.innerHTML = LEAD_I18N[curLang].map(function(line){
+    return line.split(' ').map(function(w){ return '<w>'+w+'</w>'; }).join(' ');
+  }).join('<br>');
+  if(already || RM || !window.gsap){
+    leadEl.querySelectorAll('w').forEach(function(w){ w.style.color = 'var(--ink)'; });
+  }
+}
+function renderFlow(){
+  var steps = STEPS_I18N[curLang];
+  nodes.forEach(function(n,i){
+    n.g.querySelector('text').textContent = steps[i].t;
+    n.g.setAttribute('aria-label', 'STEP '+(i+1)+' '+steps[i].t);
+  });
+  buttons.forEach(function(b,i){
+    b.querySelector('b').textContent = steps[i].t;
+    b.querySelector('.d').textContent = steps[i].d;
+  });
+  stepTitle.textContent = steps[currentStep].t;
+  stepDesc.textContent = steps[currentStep].d;
+}
+function applyLang(lang){
+  if(!I18N[lang]) lang = 'ko';
+  curLang = lang;
+  document.documentElement.lang = lang;
+  document.querySelectorAll('[data-i18n]').forEach(function(el){
+    el.textContent = t(el.getAttribute('data-i18n'));
+  });
+  document.querySelectorAll('[data-i18n-html]').forEach(function(el){
+    el.innerHTML = t(el.getAttribute('data-i18n-html'));
+  });
+  renderLead();
+  renderFlow();
+  document.querySelectorAll('.lang-switch button').forEach(function(b){
+    b.classList.toggle('on', b.getAttribute('data-lang') === lang);
+  });
+  try{ localStorage.setItem('mlLang', lang); }catch(e){}
+}
+document.querySelectorAll('.lang-switch button').forEach(function(b){
+  b.addEventListener('click', function(){ applyLang(b.getAttribute('data-lang')); });
+});
+var initLang = 'ko';
+try{
+  var saved = localStorage.getItem('mlLang');
+  if(saved && I18N[saved]) initLang = saved;
+  else{
+    var nl = (navigator.language || '').slice(0,2).toLowerCase();
+    if(I18N[nl]) initLang = nl;
+  }
+}catch(e){}
+applyLang(initLang);
 
 /* 진행바 · 내비 */
 var nav = document.getElementById('nav'), bar = document.getElementById('bar'), last = 0;
