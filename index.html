@@ -61,8 +61,7 @@ button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
 .bar{position:fixed;top:0;left:0;height:2px;width:100%;transform:scaleX(0);transform-origin:0 50%;z-index:140;background:var(--logo)}
 
 /* 커서 */
-#cur{position:fixed;top:0;left:0;width:18px;height:18px;border-radius:50%;z-index:150;
-  background:url(images/mark.png) center/contain no-repeat;
+#cur{position:fixed;top:0;left:0;width:9px;height:9px;border-radius:50%;background:var(--ink);z-index:150;
   pointer-events:none;transform:translate(-50%,-50%);display:none;
   transition:width .3s cubic-bezier(.2,.7,.3,1),height .3s cubic-bezier(.2,.7,.3,1),background .3s,opacity .3s}
 #cur.wide{width:80px;height:80px;background:rgba(27,25,22,.90)}
