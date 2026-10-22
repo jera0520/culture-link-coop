@@ -89,7 +89,7 @@
   --card:#FCFAF6;
   --ink:#1B1916;
   --ink-2:#4B463E;
-  --mute:#8C8579;
+  --mute:#6E695F; /* 작은 글자도 배경 대비 4.5:1 이상 (2026-10-22, 원래 #8C8579 = 3.0~3.5:1) */
   --faint:#C8C1B4;
   --line:rgba(27,25,22,.13);
   --hair:rgba(27,25,22,.08);
@@ -146,10 +146,34 @@ nav.solid .lock .wm{color:var(--ink)}
 .nav-links a{font-size:13px;font-weight:400;color:var(--ink-2);position:relative;padding:3px 0;letter-spacing:.02em}
 .nav-links a::after{content:"";position:absolute;left:0;right:100%;bottom:0;height:1px;background:var(--ink);transition:right .4s cubic-bezier(.2,.7,.3,1)}
 .nav-links a:hover::after{right:0}
-.nav-cta{border:1px solid var(--line);border-radius:999px;padding:9px 18px;transition:background .3s,color .3s,border-color .3s}
+.nav-links .nav-cta{border:1px solid var(--line);border-radius:999px;padding:9px 18px;transition:background .3s,color .3s,border-color .3s}
 .nav-cta:hover{background:var(--ink);color:var(--bone);border-color:var(--ink)}
 .nav-cta::after{display:none!important}
 @media(max-width:960px){.nav-links a:not(.nav-cta){display:none}}
+
+/* 휴대폰 메뉴 — 960px 이하에서 글 메뉴 대신 ≡ 버튼, 560px 이하에선 「문의」도 이 안으로 */
+.menu-btn{display:none;width:38px;height:38px;border:1px solid var(--line);border-radius:999px;place-items:center;
+  color:var(--ink-2);background:rgba(252,250,246,.55);backdrop-filter:blur(6px);
+  transition:background .3s,color .3s,border-color .3s}
+.menu-btn svg{width:16px;height:16px}
+.menu-btn:hover,.menu-btn[aria-expanded="true"]{background:var(--ink);color:var(--bone);border-color:var(--ink)}
+.mnav{position:absolute;top:calc(100% + 6px);right:clamp(18px,5vw,48px);width:min(280px,calc(100vw - 36px));padding:7px;
+  background:var(--card);border:1px solid var(--line);border-radius:15px;
+  box-shadow:0 14px 44px rgba(27,25,22,.14),0 2px 8px rgba(27,25,22,.06);
+  display:flex;flex-direction:column;gap:1px;
+  opacity:0;transform:translateY(-7px);pointer-events:none;visibility:hidden;
+  transition:opacity .28s cubic-bezier(.2,.7,.3,1),transform .28s cubic-bezier(.2,.7,.3,1),visibility .28s}
+nav.menu-open .mnav{opacity:1;transform:translateY(0);pointer-events:auto;visibility:visible;
+  transition:opacity .28s cubic-bezier(.2,.7,.3,1),transform .28s cubic-bezier(.2,.7,.3,1),visibility 0s} /* 열 땐 바로 보여야 첫 항목에 포커스가 간다 */
+.mnav a{display:flex;align-items:center;min-height:48px;padding:10px 14px;border-radius:10px;font-size:15px;color:var(--ink-2);
+  transition:background .22s,color .22s}
+.mnav a:hover,.mnav a:focus-visible{background:var(--bone-2);color:var(--ink)}
+.mnav a.mnav-cta{justify-content:center;margin-top:6px;border-radius:999px;background:var(--ink);color:var(--bone)}
+.mnav a.mnav-cta:hover{background:#000;color:var(--bone)}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+@media(max-width:960px){.menu-btn{display:grid}.nav-links{gap:10px}}
+@media(max-width:560px){.nav-links .nav-cta{display:none}}
+@media(min-width:961px){.mnav{display:none}}
 
 /* 언어 전환 */
 .lang{position:relative;margin-right:2px}
@@ -174,8 +198,8 @@ nav.solid .lock .wm{color:var(--ink)}
   min-height:44px;padding:10px 14px;border-radius:10px;text-align:left;
   font-size:14px;color:var(--ink-2);transition:background .22s,color .22s}
 .lang-menu button:hover,.lang-menu button:focus-visible{background:var(--bone-2);color:var(--ink)}
-.lang-menu button em{font-style:normal;font-size:10px;letter-spacing:.2em;color:var(--faint);transition:color .22s}
-.lang-menu button:hover em{color:var(--mute)}
+.lang-menu button em{font-style:normal;font-size:10px;letter-spacing:.2em;color:var(--mute);transition:color .22s}
+.lang-menu button:hover em{color:var(--ink-2)}
 .lang-menu button.on{color:var(--ink)}
 .lang-menu button.on em{color:var(--accent)}
 .lang-menu button.on::before{content:"";position:absolute;left:6px;width:3px;height:15px;border-radius:2px;background:var(--accent)}
@@ -292,7 +316,7 @@ h1 .ln > span{display:block}
 .dial circle.prog{fill:none;stroke:var(--accent);stroke-width:1.5;stroke-linecap:round}
 .dial .node{cursor:pointer}
 .dial .node circle{transition:r .35s,fill .35s}
-.dial .node text{font-family:"Noto Sans KR",sans-serif;font-size:12.5px;font-weight:400;fill:var(--faint);transition:fill .35s}
+.dial .node text{font-family:"Noto Sans KR",sans-serif;font-size:12.5px;font-weight:400;fill:var(--mute);transition:fill .35s}
 .dial .node.on text,.dial .node:hover text{fill:var(--ink)}
 .dial-mid{position:absolute;inset:26%;display:grid;place-items:center;text-align:center}
 .dial-mid .n{font-size:10.5px;letter-spacing:.26em;color:var(--mute)}
@@ -300,7 +324,7 @@ h1 .ln > span{display:block}
 .dial-mid p{font-size:12.5px;color:var(--ink-2);line-height:1.8}
 .flow-list{display:flex;flex-direction:column;border-top:1px solid var(--line)}
 .flow-list button{display:grid;grid-template-columns:44px 1fr;gap:14px;text-align:left;padding:16px 2px;
-  border-bottom:1px solid var(--line);color:var(--faint);transition:color .3s,padding-left .35s;width:100%;align-items:baseline}
+  border-bottom:1px solid var(--line);color:var(--mute);transition:color .3s,padding-left .35s;width:100%;align-items:baseline}
 .flow-list button:hover{padding-left:9px;color:var(--ink-2)}
 .flow-list button.on{color:var(--ink)}
 .flow-list em{font-style:normal;font-size:10.5px;letter-spacing:.2em;color:inherit}
@@ -343,7 +367,7 @@ footer .lock img{height:38px;width:38px}
 footer .lock .wm{color:var(--ink);font-size:17px}
 footer .lock .wm small{display:block;font-family:"Noto Sans KR",sans-serif;font-weight:400;font-size:9.5px;
   letter-spacing:.28em;color:var(--mute);margin-top:3px}
-footer small{color:var(--mute);font-size:11.5px;line-height:2.1;display:block}
+footer small{color:var(--mute);font-size:12.5px;line-height:2.1;display:block}
 footer .faq-links{margin-top:6px}
 @media(max-width:820px){.info div{grid-template-columns:1fr;gap:4px}}
 
@@ -386,6 +410,17 @@ footer .faq-links{margin-top:6px}
       </div>
     </div>
     <a class="nav-cta" href="#contact" data-i18n="nav.contact">문의</a>
+    <button type="button" class="menu-btn" id="menuBtn" aria-expanded="false" aria-controls="mnav">
+      <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" aria-hidden="true"><path d="M2.5 5.5h11M2.5 10.5h11"/></svg>
+      <span class="sr" data-i18n="nav.menu">메뉴</span>
+    </button>
+  </div>
+  <div class="mnav" id="mnav">
+    <a href="#about" data-i18n="nav.about">소개</a>
+    <a href="#works" data-i18n="nav.works">사업</a>
+    <a href="#flow" data-i18n="nav.flow">운영 구조</a>
+    <a href="#gallery" data-i18n="nav.gallery">현장</a>
+    <a class="mnav-cta" href="#contact" data-i18n="nav.contact">문의</a>
   </div>
 </nav>
 
@@ -817,7 +852,7 @@ var LEAD_I18N = {
 };
 var I18N = {
   ko:{
-    'nav.about':'소개','nav.works':'사업','nav.flow':'운영 구조','nav.gallery':'현장','nav.contact':'문의',
+    'nav.menu':'메뉴','nav.about':'소개','nav.works':'사업','nav.flow':'운영 구조','nav.gallery':'현장','nav.contact':'문의',
     'hero.label':'경북 안동 · 하회마을 · SINCE 2014','hero.line1':'체험에서 식탁까지,','hero.line2':'안동을 잇습니다',
     'hero.sub':'하회마을을 찾은 사람이 보고 끝나는 여행 대신, 직접 만들고 맛보고 집에서도 다시 찾게 되는 하루를 설계합니다.',
     'hero.meta.est.dt':'설립','hero.meta.est.dd':'2014년 4월','hero.meta.loc.dt':'거점','hero.meta.loc.dd':'안동시 경동로 574',
@@ -843,7 +878,7 @@ var I18N = {
     'footer.info':'문화링크협동조합 · 대표 김영숙 · 사업자등록번호 508-81-38111 · 주류판매신고 508-5-36883<br>경상북도 안동시 경동로 574, 1층 (우)36674 · 2014년 4월 설립<br>전화 <a class="lk" href="tel:0548412783">054-841-2783</a> · 이메일 <a class="lk" href="mailto:mun_link@naver.com">mun_link@naver.com</a>'
   },
   en:{
-    'nav.about':'About','nav.works':'Business','nav.flow':'How it works','nav.gallery':'Gallery','nav.contact':'Contact',
+    'nav.menu':'Menu','nav.about':'About','nav.works':'Business','nav.flow':'How it works','nav.gallery':'Gallery','nav.contact':'Contact',
     'hero.label':'Andong, Korea · Hahoe Village · SINCE 2014','hero.line1':'From experience to table,','hero.line2':'we connect Andong.',
     'hero.sub':'Instead of a trip that ends with just looking, we design a day where visitors to Hahoe Village make, taste, and want to return to — even after they\'re back home.',
     'hero.meta.est.dt':'Founded','hero.meta.est.dd':'April 2014','hero.meta.loc.dt':'Location','hero.meta.loc.dd':'574 Gyeongdong-ro, Andong',
@@ -869,7 +904,7 @@ var I18N = {
     'footer.info':'Culture Link Cooperative · CEO Youngsuk Kim · Business Registration No. 508-81-38111 · Liquor Retail License No. 508-5-36883<br>574 Gyeongdong-ro, Andong-si, Gyeongsangbuk-do, South Korea (36674)<br>Founded April 2014<br>Tel <a class="lk" href="tel:0548412783">054-841-2783</a> · Email <a class="lk" href="mailto:mun_link@naver.com">mun_link@naver.com</a>'
   },
   ja:{
-    'nav.about':'概要','nav.works':'事業','nav.flow':'仕組み','nav.gallery':'現場','nav.contact':'お問い合わせ',
+    'nav.menu':'メニュー','nav.about':'概要','nav.works':'事業','nav.flow':'仕組み','nav.gallery':'現場','nav.contact':'お問い合わせ',
     'hero.label':'韓国 安東 · 河回村 · SINCE 2014','hero.line1':'体験から食卓まで、','hero.line2':'安東をつなぎます',
     'hero.sub':'河回村を訪れて見るだけで終わる旅ではなく、直接作り、味わい、家に帰ってからもまた探すようになる一日を設計します。',
     'hero.meta.est.dt':'設立','hero.meta.est.dd':'2014年4月','hero.meta.loc.dt':'拠点','hero.meta.loc.dd':'安東市 慶東路574',
@@ -895,7 +930,7 @@ var I18N = {
     'footer.info':'文化リンク協同組合 · 代表 キム・ヨンスク · 事業者登録番号 508-81-38111 · 酒類販売申告 508-5-36883<br>大韓民国 慶尚北道安東市 慶東路574, 1階（郵便番号36674）<br>2014年4月設立<br>電話 <a class="lk" href="tel:0548412783">054-841-2783</a> · メール <a class="lk" href="mailto:mun_link@naver.com">mun_link@naver.com</a>'
   },
   it:{
-    'nav.about':'Chi siamo','nav.works':'Attività','nav.flow':'Come funziona','nav.gallery':'Galleria','nav.contact':'Contatti',
+    'nav.menu':'Menu','nav.about':'Chi siamo','nav.works':'Attività','nav.flow':'Come funziona','nav.gallery':'Galleria','nav.contact':'Contatti',
     'hero.label':'Andong, Corea del Sud · Villaggio di Hahoe · SINCE 2014','hero.line1':'Dall\'esperienza alla tavola,','hero.line2':'colleghiamo Andong.',
     'hero.sub':'Invece di un viaggio che finisce con il semplice guardare, progettiamo una giornata in cui chi visita il villaggio di Hahoe crea, assapora e desidera tornare anche una volta a casa.',
     'hero.meta.est.dt':'Fondazione','hero.meta.est.dd':'Aprile 2014','hero.meta.loc.dt':'Sede','hero.meta.loc.dd':'574 Gyeongdong-ro, Andong',
@@ -921,7 +956,7 @@ var I18N = {
     'footer.info':'Culture Link Cooperative · CEO Youngsuk Kim · N. registrazione attività 508-81-38111 · Licenza vendita liquori 508-5-36883<br>574 Gyeongdong-ro, Andong-si, Gyeongsangbuk-do, Corea del Sud (36674)<br>Fondata nell\'aprile 2014<br>Tel <a class="lk" href="tel:0548412783">054-841-2783</a> · Email <a class="lk" href="mailto:mun_link@naver.com">mun_link@naver.com</a>'
   },
   de:{
-    'nav.about':'Über uns','nav.works':'Angebot','nav.flow':'Ablauf','nav.gallery':'Einblicke','nav.contact':'Kontakt',
+    'nav.menu':'Menü','nav.about':'Über uns','nav.works':'Angebot','nav.flow':'Ablauf','nav.gallery':'Einblicke','nav.contact':'Kontakt',
     'hero.label':'Andong, Korea · Dorf Hahoe · SINCE 2014','hero.line1':'Vom Erlebnis bis zum Tisch –','hero.line2':'wir verbinden Andong.',
     'hero.sub':'Statt einer Reise, die mit bloßem Zuschauen endet, gestalten wir einen Tag, an dem Besucher des Dorfes Hahoe selbst kochen, probieren und sich wünschen zurückzukehren – auch wenn sie längst wieder zu Hause sind.',
     'hero.meta.est.dt':'Gegründet','hero.meta.est.dd':'April 2014','hero.meta.loc.dt':'Standort','hero.meta.loc.dd':'574 Gyeongdong-ro, Andong',
@@ -947,7 +982,7 @@ var I18N = {
     'footer.info':'Culture Link Cooperative · Geschäftsführerin Youngsuk Kim · Gewerberegisternummer 508-81-38111 · Alkoholverkaufslizenz 508-5-36883<br>574 Gyeongdong-ro, Andong-si, Gyeongsangbuk-do, Südkorea (36674)<br>Gegründet im April 2014<br>Tel <a class="lk" href="tel:0548412783">054-841-2783</a> · E-Mail <a class="lk" href="mailto:mun_link@naver.com">mun_link@naver.com</a>'
   },
   pl:{
-    'nav.about':'O nas','nav.works':'Działalność','nav.flow':'Jak to działa','nav.gallery':'Galeria','nav.contact':'Kontakt',
+    'nav.menu':'Menu','nav.about':'O nas','nav.works':'Działalność','nav.flow':'Jak to działa','nav.gallery':'Galeria','nav.contact':'Kontakt',
     'hero.label':'Andong, Korea Południowa · Wioska Hahoe · SINCE 2014','hero.line1':'Od doświadczenia do stołu,','hero.line2':'łączymy Andong.',
     'hero.sub':'Zamiast podróży, która kończy się samym patrzeniem, projektujemy dzień, w którym odwiedzający wioskę Hahoe sami przygotowują, smakują i chcą wracać – nawet po powrocie do domu.',
     'hero.meta.est.dt':'Założona','hero.meta.est.dd':'Kwiecień 2014','hero.meta.loc.dt':'Siedziba','hero.meta.loc.dd':'574 Gyeongdong-ro, Andong',
@@ -1058,6 +1093,27 @@ document.addEventListener('click', function(e){
 document.addEventListener('keydown', function(e){
   if(e.key === 'Escape' && langWrap.classList.contains('open')) closeLang(true);
 });
+
+/* 휴대폰 메뉴 */
+var navEl = document.getElementById('nav'), menuBtn = document.getElementById('menuBtn'), mnav = document.getElementById('mnav'), menuY = 0;
+function setMenu(open, focus){
+  navEl.classList.toggle('menu-open', open);
+  menuBtn.setAttribute('aria-expanded', open ? 'true' : 'false');
+  if(open){ menuY = scrollY; mnav.querySelector('a').focus(); }
+  else if(focus) menuBtn.focus();
+}
+function menuOpen(){ return navEl.classList.contains('menu-open'); }
+menuBtn.addEventListener('click', function(e){
+  e.stopPropagation();
+  if(langWrap.classList.contains('open')) closeLang(false);
+  setMenu(!menuOpen(), false);
+});
+langBtn.addEventListener('click', function(){ if(menuOpen()) setMenu(false, false); });
+mnav.querySelectorAll('a').forEach(function(a){ a.addEventListener('click', function(){ setMenu(false, false); }); });
+document.addEventListener('click', function(e){ if(menuOpen() && !mnav.contains(e.target)) setMenu(false, false); });
+document.addEventListener('keydown', function(e){ if(e.key === 'Escape' && menuOpen()) setMenu(false, true); });
+addEventListener('scroll', function(){ if(menuOpen() && Math.abs(scrollY - menuY) > 40) setMenu(false, false); }, {passive:true});
+matchMedia('(min-width:961px)').addEventListener('change', function(m){ if(m.matches && menuOpen()) setMenu(false, false); });
 
 /* 기본은 한국어. 방문자가 직접 고른 언어만 기억한다 */
 var initLang = 'ko';
