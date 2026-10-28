@@ -4,7 +4,9 @@
 값을 고치면 이 파일만 고치고 `python3 _src/build_pages.py`로 다시 만든다.
 (밑줄로 시작하는 폴더라 GitHub Pages(Jekyll)는 이 폴더를 배포하지 않는다.)
 근거: 카카오톡 채널 안내문 원문(2026-10-12, munlink-work/_review/카카오채널_자동응답_원문_2026-10-12.md),
-볼트 wiki/topics/하회주막민박_판매정보_2026-09-18.md, 사이트 index.html 문구.
+같은 채널 「체험 프로그램 안내」 10-22 교체본(munlink-work/account-ops/kakao_channel_autoreply_draft_2026-10-22.md,
+「전통혼례 · 제사 체험」 줄), 볼트 wiki/topics/하회주막민박_판매정보_2026-09-18.md, 사이트 index.html 문구.
+하회주막&민박은 두 쪽(주막 체험·민박)에 같은 @id(PLACE_ID)로 싣고, 쪽마다 그 쪽 화면에 있는 사실만 넣는다.
 """
 import html
 import json
@@ -13,10 +15,11 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parent.parent
 SITE = "https://munlink.co.kr"
 ASOF = "2026-10-12"
-MODIFIED = "2026-10-20"
+MODIFIED = "2026-10-20"  # 쪽마다 "modified"가 있으면 그 값을 쓴다
 KAKAO = "https://pf.kakao.com/_iKJxaX"
 AIRBNB = "https://www.airbnb.co.kr/rooms/1516268030786572692"
 ADDR_JUMAK = "경상북도 안동시 풍천면 하회북촌길 20-6"
+PLACE_ID = SITE + "/#hahoe-jumak"
 
 CONTACT_A = (
     f"카카오톡 채널로 희망 날짜와 인원을 메시지로 남기거나 054-841-2783으로 전화해 주세요. "
@@ -28,23 +31,33 @@ PAGES = [
         "slug": "hahoe-jumak",
         "nav": "하회마을 주막 체험",
         "title": "안동 하회마을 주막 체험 — 하회주막 위치·프로그램·예약 | 문화링크협동조합",
-        "desc": "안동 하회마을 안 120년 된 초가집 하회주막에서 종가음식 만들기, 전통주 만들기·시음 체험을 합니다. 위치, 프로그램, 금액 안내 방법, 찾아오는 길, 예약 방법.",
+        "desc": "안동 하회마을 안 120년 된 초가집 하회주막에서 종가음식 만들기, 전통주 만들기·시음, 전통혼례·제사 체험을 합니다. 위치, 프로그램, 금액 안내 방법, 찾아오는 길, 예약 방법.",
         "h1": "안동 하회마을 주막 체험은 어디서, 무엇을 하나요?",
-        "answer": "하회마을 안 120년 된 초가집 「하회주막」에서 종가음식 만들기와 전통주 만들기·시음을 합니다. 가족·단체 모두 가능하고, 금액은 날짜와 인원에 따라 안내드립니다.",
+        "answer": "하회마을 안 120년 된 초가집 「하회주막」에서 종가음식 만들기, 전통주 만들기·시음, 전통혼례·제사 체험을 합니다. 가족·단체 모두 가능하고, 금액은 날짜와 인원에 따라 안내드립니다.",
+        "modified": "2026-10-28",
         "img": ("images/p1.webp", "하회마을 야외 주막 체험장"),
         "facts": [
             ("장소", f"하회주막 · {ADDR_JUMAK} (하회마을 안)"),
-            ("프로그램", "종가음식 만들기 · 전통주 만들기 · 시음"),
+            ("프로그램", "종가음식 만들기 · 전통주 만들기·시음 · 전통혼례·제사 체험"),
             ("진행 단위", "90분 단위 프로그램"),
             ("대상", "가족 · 단체"),
             ("군자주 담그기", "체험 키트 1세트 22,000원"),
             ("금액·구성", "날짜와 인원에 따라 달라지며 문의하시면 안내드립니다"),
+            ("숙박", "같은 초가집을 「하회주막&민박」으로 집 한 채 통째로 빌려 드립니다"),
         ],
+        "place": {
+            "image": "images/p1.webp",
+            "touristType": ["가족", "단체"],
+            "programs": ["종가음식 만들기", "전통주 만들기·시음", "전통혼례·제사 체험"],
+            "kit": ("군자주 담그기 체험 키트", 22000),
+        },
         "faq": [
             ("체험 금액은 얼마인가요?",
              "인원과 날짜에 따라 구성이 달라집니다. 희망 날짜와 인원을 남겨 주시면 가능한 프로그램과 금액을 안내드립니다. 군자주 담그기 체험은 키트 1세트 22,000원입니다(2026-10-12 기준)."),
             ("군자주 담그기는 어떤 체험인가요?",
              "매화·오미자·국화·녹차 네 가지 재료로 군자주를 직접 담그는 체험입니다. 담근 병은 그대로 가져가실 수 있습니다."),
+            ("전통혼례 체험도 할 수 있나요?",
+             "하회주막에서 전통혼례·제사 체험을 합니다. 구성과 금액은 날짜와 인원에 따라 달라지므로, 희망 날짜와 인원을 남겨 주시면 가능한 구성과 금액을 안내드립니다."),
             ("하회주막은 어떻게 찾아가나요?",
              "차는 하회마을 매표소 주차장에 세우고, 매표소 앞에서 마을로 들어가는 셔틀버스를 탑니다. 버스에서 내려 마을 입구의 큰 안내판(지도)을 지나 걸어서 7분쯤 오시면 하회주막입니다."),
             ("예약은 어떻게 하나요?", CONTACT_A),
@@ -82,6 +95,7 @@ PAGES = [
         "desc": "안동 하회마을 안 120년 된 초가집 하회주막&민박을 집 한 채 통째로 빌려 드립니다. 1박 50만 원, 최대 10명, 침실 4·욕실 2, 체크인 17:00·체크아웃 12:00(2026-10-12 기준).",
         "h1": "하회마을 안에서 묵을 수 있는 한옥 민박이 있나요?",
         "answer": "있습니다. 하회마을 안 120년 된 초가집 「하회주막&민박」을 집 한 채 통째로 빌려 드립니다. 1박 50만 원, 최대 10명입니다(2026-10-12 기준).",
+        "modified": "2026-10-28",
         "img": ("images/p4.webp", "햇살이 드는 한옥 실내, 좌탁과 방석이 놓인 방"),
         "facts": [
             ("이름", "하회주막&민박"),
@@ -93,6 +107,18 @@ PAGES = [
             ("입·퇴실", "체크인 17:00 · 체크아웃 12:00"),
             ("별도 옵션", "조식(선지해장국·야채죽) · 전통주 시음·만들기 · 종가음식 만들기"),
         ],
+        "place": {
+            "image": "images/p4.webp",
+            "priceRange": "1박 50만 원",
+            "offer": ("집 전체 1박", 500000),
+            "bedrooms": 4,
+            "bathrooms": 2,
+            "occupancy": 10,
+            "checkin": "17:00",
+            "checkout": "12:00",
+            "amenities": ["장작을 때는 전통 온돌방", "주방", "세탁기", "건조기", "에어컨", "무료 주차"],
+            "sameAs": [AIRBNB],
+        },
         "faq": [
             ("화장실은 어디에 있나요?",
              "화장실은 별채에 2개 있고 샤워할 수 있습니다."),
@@ -129,7 +155,7 @@ PAGES = [
 ]
 
 CSS = """
-:root{--bone:#F7F4EE;--bone-2:#EFEAE1;--card:#FCFAF6;--ink:#1B1916;--ink-2:#4B463E;--mute:#8C8579;
+:root{--bone:#F7F4EE;--bone-2:#EFEAE1;--card:#FCFAF6;--ink:#1B1916;--ink-2:#4B463E;--mute:#6E695F;
   --line:rgba(27,25,22,.13);--hair:rgba(27,25,22,.08);--accent:#2F4A38;
   --logo:linear-gradient(90deg,#4FA45C,#2E9E8F,#2F62C4,#6A4BB4,#8E46A8,#A93B72)}
 *{box-sizing:border-box}
@@ -189,8 +215,66 @@ FOOTER = """<footer>
 e = html.escape
 
 
+def place_node(pl):
+    """하회주막&민박 — 숙박업소이자 체험 장소. 그 쪽 화면에 있는 사실만 넣는다."""
+    node = {
+        "@type": ["LodgingBusiness", "TouristAttraction"],
+        "@id": PLACE_ID,
+        "name": "하회주막&민박",
+        "alternateName": "하회주막",
+        "description": "안동 하회마을 안 120년 된 초가집.",
+        "image": f"{SITE}/{pl['image']}",
+        "address": {
+            "@type": "PostalAddress",
+            "streetAddress": "풍천면 하회북촌길 20-6",
+            "addressLocality": "안동시",
+            "addressRegion": "경상북도",
+            "addressCountry": "KR",
+        },
+        "containedInPlace": {"@type": "Place", "name": "안동 하회마을"},
+        "telephone": "+82-54-841-2783",
+        "parentOrganization": {"@id": SITE + "/#org"},
+    }
+    if "programs" in pl:
+        kit_name, kit_price = pl["kit"]
+        node["touristType"] = pl["touristType"]
+        node["hasOfferCatalog"] = {
+            "@type": "OfferCatalog",
+            "name": "하회주막 체험",
+            "itemListElement": [
+                {"@type": "Offer", "itemOffered": {"@type": "Service", "name": n}}
+                for n in pl["programs"]
+            ] + [
+                {"@type": "Offer", "name": kit_name, "price": kit_price, "priceCurrency": "KRW"}
+            ],
+        }
+    if "offer" in pl:
+        offer_name, offer_price = pl["offer"]
+        node.update({
+            "priceRange": pl["priceRange"],
+            "checkinTime": pl["checkin"],
+            "checkoutTime": pl["checkout"],
+            "numberOfRooms": pl["bedrooms"],
+            "amenityFeature": [
+                {"@type": "LocationFeatureSpecification", "name": a, "value": True}
+                for a in pl["amenities"]
+            ],
+            "containsPlace": {
+                "@type": "House",
+                "name": "집 전체",
+                "numberOfBedrooms": pl["bedrooms"],
+                "numberOfBathroomsTotal": pl["bathrooms"],
+                "occupancy": {"@type": "QuantitativeValue", "maxValue": pl["occupancy"], "unitText": "명"},
+            },
+            "makesOffer": {"@type": "Offer", "name": offer_name, "price": offer_price, "priceCurrency": "KRW"},
+            "sameAs": pl["sameAs"],
+        })
+    return node
+
+
 def build(p):
     url = f"{SITE}/{p['slug']}/"
+    modified = p.get("modified", MODIFIED)
     ld = {
         "@context": "https://schema.org",
         "@graph": [
@@ -200,7 +284,7 @@ def build(p):
                 "url": url,
                 "name": p["h1"],
                 "inLanguage": "ko",
-                "dateModified": MODIFIED,
+                "dateModified": modified,
                 "publisher": {"@id": SITE + "/#org"},
                 "mainEntity": [
                     {"@type": "Question", "name": p["h1"],
@@ -220,6 +304,9 @@ def build(p):
             },
         ],
     }
+    if "place" in p:
+        ld["@graph"][0]["about"] = {"@id": PLACE_ID}
+        ld["@graph"].append(place_node(p["place"]))
     facts = "\n".join(
         f'      <div><dt>{e(k)}</dt><dd>{e(v)}</dd></div>' for k, v in p["facts"]
     )
@@ -281,7 +368,7 @@ def build(p):
     <dl class="facts">
 {facts}
     </dl>
-    <p class="asof">금액·시간은 {ASOF} 기준 조합 안내입니다. 바뀔 수 있으니 예약 전에 확인해 주세요. (쪽 갱신 {MODIFIED})</p>
+    <p class="asof">금액·시간은 {ASOF} 기준 조합 안내입니다. 바뀔 수 있으니 예약 전에 확인해 주세요. (쪽 갱신 {modified})</p>
 
     <h2>자주 묻는 질문</h2>
     <div class="qa">
