@@ -113,6 +113,9 @@ body{
 }
 h1,h2,h3{margin:0;font-family:"Nanum Myeongjo","Cormorant Garamond",serif;font-weight:700;
   line-height:1.32;letter-spacing:-.015em;word-break:keep-all;text-wrap:balance}
+/* 일본어는 띄어쓰기가 없어 keep-all이면 문장이 한 덩어리로 폰 폭을 넘는다 (2026-10-28) */
+html[lang="ja"] body,html[lang="ja"] h1,html[lang="ja"] h2,html[lang="ja"] h3{word-break:normal;line-break:strict}
+@supports (word-break:auto-phrase){html[lang="ja"] body,html[lang="ja"] h1,html[lang="ja"] h2,html[lang="ja"] h3{word-break:auto-phrase}}
 p{margin:0}
 a{color:inherit;text-decoration:none}
 img{display:block;max-width:100%}
