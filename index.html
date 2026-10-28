@@ -36,7 +36,7 @@
    "url": "https://munlink.co.kr/",
    "logo": "https://munlink.co.kr/images/mark.png",
    "image": "https://munlink.co.kr/og.jpg",
-   "description": "안동 하회마을에서 전통문화 체험과 종가음식, 안동 전통주와 특산품을 하나의 흐름으로 운영하는 협동조합입니다.",
+   "description": "안동에서 잔치를 준비하는 협동조합입니다. 지역 축제를 기획하고, 하회마을에서 전통혼례·체험·민박과 종가음식, 안동 전통주를 운영합니다.",
    "foundingDate": "2014-04",
    "taxID": "508-81-38111",
    "address": {
@@ -54,14 +54,19 @@
     "name": "경상북도 안동시 하회마을"
    },
    "knowsAbout": [
+    "축제·행사 기획",
+    "전통혼례·제사 체험",
     "주막·종가음식 체험",
+    "하회마을 민박·공간 대여",
     "종가음식·식사 운영",
-    "안동 전통주·특산품",
-    "공간 운영·대여",
-    "기획·콘텐츠·교육"
+    "안동 전통주·특산품"
    ],
+   "department": {
+    "@id": "https://munlink.co.kr/#hahoe-jumak"
+   },
    "sameAs": [
-    "https://www.instagram.com/m_unlink/"
+    "https://www.instagram.com/m_unlink/",
+    "https://pf.kakao.com/_iKJxaX"
    ]
   },
   {
@@ -391,7 +396,7 @@ nav:not(.solid) .nav-cta{color:#FBF9F5;border-color:rgba(251,249,245,.45)}
 .card .more::after{content:"";position:absolute;left:0;right:0;bottom:-1px;height:1px;background:var(--logo);transform:scaleX(0);transform-origin:left;
   transition:transform .55s cubic-bezier(.2,.7,.3,1)}
 .card:hover .more::after,.card .more:focus-visible::after{transform:scaleX(1)}
-.ai{position:absolute;left:10px;bottom:10px;z-index:1;padding:4px 10px;border-radius:999px;background:rgba(18,16,13,.74);
+.ai,.cap{position:absolute;left:10px;bottom:10px;z-index:1;padding:4px 10px;border-radius:999px;background:rgba(18,16,13,.74);
   color:#F3EFE7;font-size:11.5px;line-height:1.5;letter-spacing:.01em;pointer-events:none}
 @media(min-width:961px){
   .works .drag-hint,.works .rail-nav{display:none}
@@ -636,7 +641,7 @@ footer .lock .wm small{font-size:10.5px}
         <a class="more" href="#festival" draggable="false"><span data-i18n="works.f.more">지난 축제 보기</span> →</a>
       </article>
       <article class="card">
-        <div class="ph"><img src="images/ai/wedding-800.webp" width="800" height="600" loading="lazy" decoding="async" alt="AI로 만든 임시 사진: 하회주막 마당에서 신랑 신부가 초례상을 사이에 두고 절하는 전통혼례"><span class="ai" data-i18n="ai.label">AI로 만든 임시 사진</span></div>
+        <div class="ph"><img src="images/wedding-yeongyang-2026-10-800.webp" width="800" height="600" loading="lazy" decoding="async" alt="문화링크가 차린 전통혼례 초례상, 청홍 보자기와 촛대·과일, 2026년 10월 영양 합동혼례식"><span class="cap" data-i18n="works.w.photo">문화링크가 차린 초례상 · 2026.10 영양 합동혼례식</span></div>
         <p class="no"><i></i>02 &nbsp;<span data-i18n="works.w.name">혼례</span></p>
         <h3 data-i18n="works.w.title">전통혼례 · 제사 체험</h3>
         <p data-i18n="works.w.desc">하회마을 안 120년 된 초가집 하회주막에서 전통혼례와 제사 의례를 직접 해 봅니다.</p>
@@ -1243,7 +1248,7 @@ var I18N = {
     'hero.btn.fest':'축제·행사 의뢰',
     'hero.btn.guest':'혼례·숙박·체험 문의',
     'hero.btn.guestIntl':'WhatsApp으로 문의',
-    'ai.label':'AI로 만든 임시 사진',
+    'ai.label':'AI로 만든 임시 사진','works.w.photo':'문화링크가 차린 초례상 · 2026.10 영양 합동혼례식',
     'works.f.name':'기획',
     'works.f.title':'축제 · 행사 기획',
     'works.f.desc':'지역 축제와 시장 행사를 기획부터 운영·정산까지 맡습니다.',
@@ -1306,7 +1311,7 @@ var I18N = {
     'nav.festival':'Festivals',
     'hero.btn.fest':'Festival & event inquiries',
     'hero.btn.guestIntl':'Weddings, stays & experiences (WhatsApp)',
-    'ai.label':'AI-generated placeholder photo',
+    'ai.label':'AI-generated placeholder photo','works.w.photo':'Our wedding table · Yeongyang, October 2026',
     'works.f.name':'Planning',
     'works.f.title':'Festival & Event Planning',
     'works.f.desc':'We plan and run local festivals and market events, from first idea to final settlement.',
@@ -1369,7 +1374,7 @@ var I18N = {
     'nav.festival':'祭り',
     'hero.btn.fest':'祭り・イベントのご依頼',
     'hero.btn.guestIntl':'婚礼・宿泊・体験のお問い合わせ（WhatsApp）',
-    'ai.label':'AIで作成した仮の写真',
+    'ai.label':'AIで作成した仮の写真','works.w.photo':'文化リンクが整えた婚礼の膳・2026年10月 英陽 合同婚礼',
     'works.f.name':'企画',
     'works.f.title':'祭り・イベント企画',
     'works.f.desc':'地域の祭りや市場のイベントを、企画から運営・精算まで担います。',
@@ -1432,7 +1437,7 @@ var I18N = {
     'nav.festival':'Festival',
     'hero.btn.fest':'Richieste per festival ed eventi',
     'hero.btn.guestIntl':'Matrimoni, soggiorni ed esperienze (WhatsApp)',
-    'ai.label':'Foto provvisoria creata con IA',
+    'ai.label':'Foto provvisoria creata con IA','works.w.photo':'La nostra tavola nuziale · Yeongyang, ottobre 2026',
     'works.f.name':'Progettazione',
     'works.f.title':'Progettazione di festival ed eventi',
     'works.f.desc':'Progettiamo e gestiamo festival locali ed eventi di mercato, dall\'idea alla rendicontazione.',
@@ -1495,7 +1500,7 @@ var I18N = {
     'nav.festival':'Feste',
     'hero.btn.fest':'Anfragen für Feste & Events',
     'hero.btn.guestIntl':'Hochzeit, Übernachtung & Erlebnisse (WhatsApp)',
-    'ai.label':'Mit KI erstelltes Platzhalterfoto',
+    'ai.label':'Mit KI erstelltes Platzhalterfoto','works.w.photo':'Unser Hochzeitstisch · Yeongyang, Oktober 2026',
     'works.f.name':'Planung',
     'works.f.title':'Planung von Festen & Events',
     'works.f.desc':'Wir planen und betreuen regionale Feste und Marktveranstaltungen – von der Idee bis zur Abrechnung.',
@@ -1558,7 +1563,7 @@ var I18N = {
     'nav.festival':'Festiwale',
     'hero.btn.fest':'Zapytania o festiwale i wydarzenia',
     'hero.btn.guestIntl':'Wesela, noclegi i warsztaty (WhatsApp)',
-    'ai.label':'Zdjęcie poglądowe wygenerowane przez AI',
+    'ai.label':'Zdjęcie poglądowe wygenerowane przez AI','works.w.photo':'Nasz stół weselny · Yeongyang, październik 2026',
     'works.f.name':'Planowanie',
     'works.f.title':'Planowanie festiwali i wydarzeń',
     'works.f.desc':'Planujemy i prowadzimy lokalne festiwale i wydarzenia targowe – od pomysłu po rozliczenie.',
