@@ -421,7 +421,7 @@ nav:not(.solid) .nav-cta{color:#FBF9F5;border-color:rgba(251,249,245,.45)}
 .fest-ph img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:0}
 .fest-ph img.prev{opacity:1;z-index:1}
 .fest-ph img.on{opacity:1;z-index:2;animation:festWipe 1s cubic-bezier(.65,0,.25,1) both,festZoom 9s cubic-bezier(.2,.6,.3,1) both}
-.fest-ph .ai{z-index:3}
+.fest-ph .fc{z-index:3;display:none}.fest-ph .fc.on{display:block}
 .hero .ai{left:auto;right:clamp(18px,5vw,54px);bottom:12px;z-index:3}
 .gstrip figure{position:relative}
 .gstrip .ai{top:10px;bottom:auto}
@@ -699,10 +699,13 @@ footer .lock .wm small{font-size:10.5px}
     <div class="fest-body">
       <figure class="fest-ph">
         <img class="on" src="images/ai/fest-2023-09-makgeolli-800.webp" width="800" height="600" loading="lazy" decoding="async" alt="AI로 만든 임시 사진: 아케이드 시장 골목 좌판에서 사발에 막걸리를 따르는 상인">
-        <img src="images/ai/fest-2023-11-gimjang-800.webp" width="800" height="600" loading="lazy" decoding="async" alt="AI로 만든 임시 사진: 안동소주와 막걸리 시음 탁자 너머로 천막 아래에서 김장을 하는 사람들">
-        <img src="images/ai/fest-2024-11-gamasot-800.webp" width="800" height="600" loading="lazy" decoding="async" alt="AI로 만든 임시 사진: 장작불 가마솥 밥을 푸는 모습 뒤로 김장 천막과 안동소주 시음 탁자">
+        <img src="images/fest-2023-11-gimjang-800.webp" width="800" height="640" loading="lazy" decoding="async" alt="2023 풍산장터 전통주와 김장축제 현장: 축제 현수막 아래 탁자에 쌓인 절임배추를 앞치마를 두른 사람들이 다루는 모습">
+        <img src="images/fest-2024-11-poster-800.webp" width="800" height="640" loading="lazy" decoding="async" alt="2024 풍산장터 김장축제 포스터: K-food 김치와 우리 술, 2024년 11월 30일~12월 1일 안동 풍산시장 일원">
         <img src="images/ai/fest-2026-11-cycle-800.webp" width="800" height="600" loading="lazy" decoding="async" alt="AI로 만든 임시 사진: 같은 티셔츠에 하회탈을 단 친구들이 월영교를 뒤로 하고 강변길을 달리는 퍼레이드">
-        <span class="ai" data-i18n="ai.label">AI로 만든 임시 사진</span>
+        <span class="ai fc on" data-i18n="ai.label">AI로 만든 임시 사진</span>
+        <span class="cap fc" data-i18n="fest.c2.photo">2023 풍산장터 전통주와 김장축제 현장</span>
+        <span class="cap fc" data-i18n="fest.c3.photo">2024 축제 포스터</span>
+        <span class="ai fc" data-i18n="ai.label">AI로 만든 임시 사진</span>
       </figure>
       <ol class="fest-list">
         <li class="fi on">
@@ -951,11 +954,12 @@ function draggable(outer, inner, step){
 var railCtl = draggable(document.getElementById('railOuter'), document.getElementById('rail'), 400);
 
 // 축제 연표: 줄을 가리키거나 누르면 왼쪽 사진이 그 행사 사진으로 바뀐다
-var festRows = document.querySelectorAll('.fi'), festImgs = document.querySelectorAll('.fest-ph img');
+var festRows = document.querySelectorAll('.fi'), festImgs = document.querySelectorAll('.fest-ph img'), festCaps = document.querySelectorAll('.fest-ph .fc');
 var festCur = 0;
 function festPick(i, replay){
   if(i === festCur && !replay) return;
   festRows.forEach(function(r, k){ r.classList.toggle('on', k === i); });
+  festCaps.forEach(function(c, k){ c.classList.toggle('on', k === i); });
   festImgs.forEach(function(m, k){ m.classList.toggle('prev', k === festCur && k !== i); m.classList.remove('on'); });
   void festImgs[i].offsetWidth;   // 애니메이션을 처음부터 다시 돌린다
   festImgs[i].classList.add('on');
@@ -1251,7 +1255,7 @@ var I18N = {
     'hero.btn.fest':'축제·행사 의뢰',
     'hero.btn.guest':'혼례·숙박·체험 문의',
     'hero.btn.guestIntl':'WhatsApp으로 문의',
-    'ai.label':'AI로 만든 임시 사진','works.w.photo':'문화링크가 차린 초례상 · 2026.10 영양 합동혼례식',
+    'ai.label':'AI로 만든 임시 사진','works.w.photo':'문화링크가 차린 초례상 · 2026.10 영양 합동혼례식','fest.c2.photo':'2023 풍산장터 전통주와 김장축제 현장','fest.c3.photo':'2024 축제 포스터',
     'works.f.name':'기획',
     'works.f.title':'축제 · 행사 기획',
     'works.f.desc':'지역 축제와 시장 행사를 기획부터 운영·정산까지 맡습니다.',
@@ -1314,7 +1318,7 @@ var I18N = {
     'nav.festival':'Festivals',
     'hero.btn.fest':'Festival & event inquiries',
     'hero.btn.guestIntl':'Weddings, stays & experiences (WhatsApp)',
-    'ai.label':'AI-generated placeholder photo','works.w.photo':'Our wedding table · Yeongyang, October 2026',
+    'ai.label':'AI-generated placeholder photo','works.w.photo':'Our wedding table · Yeongyang, October 2026','fest.c2.photo':'At the festival · Pungsan Market, November 2023','fest.c3.photo':'Festival poster, 2024',
     'works.f.name':'Planning',
     'works.f.title':'Festival & Event Planning',
     'works.f.desc':'We plan and run local festivals and market events, from first idea to final settlement.',
@@ -1377,7 +1381,7 @@ var I18N = {
     'nav.festival':'祭り',
     'hero.btn.fest':'祭り・イベントのご依頼',
     'hero.btn.guestIntl':'婚礼・宿泊・体験のお問い合わせ（WhatsApp）',
-    'ai.label':'AIで作成した仮の写真','works.w.photo':'文化リンクが整えた婚礼の膳・2026年10月 英陽 合同婚礼',
+    'ai.label':'AIで作成した仮の写真','works.w.photo':'文化リンクが整えた婚礼の膳・2026年10月 英陽 合同婚礼','fest.c2.photo':'豊山市場 伝統酒とキムジャン祭りの会場・2023年11月','fest.c3.photo':'2024年 祭りのポスター',
     'works.f.name':'企画',
     'works.f.title':'祭り・イベント企画',
     'works.f.desc':'地域の祭りや市場のイベントを、企画から運営・精算まで担います。',
@@ -1440,7 +1444,7 @@ var I18N = {
     'nav.festival':'Festival',
     'hero.btn.fest':'Richieste per festival ed eventi',
     'hero.btn.guestIntl':'Matrimoni, soggiorni ed esperienze (WhatsApp)',
-    'ai.label':'Foto provvisoria creata con IA','works.w.photo':'La nostra tavola nuziale · Yeongyang, ottobre 2026',
+    'ai.label':'Foto provvisoria creata con IA','works.w.photo':'La nostra tavola nuziale · Yeongyang, ottobre 2026','fest.c2.photo':'Al festival · Mercato di Pungsan, novembre 2023','fest.c3.photo':'Locandina del festival, 2024',
     'works.f.name':'Progettazione',
     'works.f.title':'Progettazione di festival ed eventi',
     'works.f.desc':'Progettiamo e gestiamo festival locali ed eventi di mercato, dall\'idea alla rendicontazione.',
@@ -1503,7 +1507,7 @@ var I18N = {
     'nav.festival':'Feste',
     'hero.btn.fest':'Anfragen für Feste & Events',
     'hero.btn.guestIntl':'Hochzeit, Übernachtung & Erlebnisse (WhatsApp)',
-    'ai.label':'Mit KI erstelltes Platzhalterfoto','works.w.photo':'Unser Hochzeitstisch · Yeongyang, Oktober 2026',
+    'ai.label':'Mit KI erstelltes Platzhalterfoto','works.w.photo':'Unser Hochzeitstisch · Yeongyang, Oktober 2026','fest.c2.photo':'Beim Fest · Pungsan-Markt, November 2023','fest.c3.photo':'Festplakat 2024',
     'works.f.name':'Planung',
     'works.f.title':'Planung von Festen & Events',
     'works.f.desc':'Wir planen und betreuen regionale Feste und Marktveranstaltungen – von der Idee bis zur Abrechnung.',
@@ -1566,7 +1570,7 @@ var I18N = {
     'nav.festival':'Festiwale',
     'hero.btn.fest':'Zapytania o festiwale i wydarzenia',
     'hero.btn.guestIntl':'Wesela, noclegi i warsztaty (WhatsApp)',
-    'ai.label':'Zdjęcie poglądowe wygenerowane przez AI','works.w.photo':'Nasz stół weselny · Yeongyang, październik 2026',
+    'ai.label':'Zdjęcie poglądowe wygenerowane przez AI','works.w.photo':'Nasz stół weselny · Yeongyang, październik 2026','fest.c2.photo':'Na festiwalu · targ Pungsan, listopad 2023','fest.c3.photo':'Plakat festiwalu, 2024',
     'works.f.name':'Planowanie',
     'works.f.title':'Planowanie festiwali i wydarzeń',
     'works.f.desc':'Planujemy i prowadzimy lokalne festiwale i wydarzenia targowe – od pomysłu po rozliczenie.',
